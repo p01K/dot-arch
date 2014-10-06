@@ -1,0 +1,90 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory autocd extendedglob notify
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/p01/.zshrc'
+
+autoload -U colors && colors
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+#
+
+########### tests #########
+zstyle ':completion:*' menu select
+setopt HIST_IGNORE_DUPS
+###################
+
+###################### generic ##########################
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -a'
+alias ls.rec='ls -R -l'
+alias grep='grep --colour -n'
+alias open='xdg-open'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..' 
+##################### /generic ##########################
+
+########### PACMAN SHORTCUTS ###################### 
+alias pacman.refresh='sudo pacman -Sy'
+alias pacman.install='sudo pacman -S' 
+alias pacman.search='pacman -Ss'                                                                                                                                                 
+alias pacman.sys_ugd='sudo pacman -Syyu' #system                                                                                                                               
+alias pacman.rm='sudo pacman -R'                                                                                                                                     
+alias pacman.rmr='sudo pacman -Rsn'  #also remove unused                                                                                                                         
+alias pacman.dis='sudo pacman -Si'   #display extensive info                                                                                                            
+alias pacman.orphan='sudo pacman -Qdt'                                                                                                                                           
+alias pacman.cc='sudo pacman -Scc' #clean                                                                                                                             
+############ /PACMAN SHORTCUTS #####################
+
+alias dmesg='dmesg -L' #add colours to the dmesg output 
+alias ss.tcp_l='ss -rplt'
+
+
+alias tar.e_bz2='tar xjf'
+alias tar.e_tar.gz='tar -zxvf'
+
+kate.noerr(){
+  kate "$@" 2> /dev/null &
+}
+
+ssh.shark(){
+      ssh shark -t ssh $1
+}
+
+man(){
+    env LESS_TERMCAP_mb=$'\E[01;31m' \
+    LESS_TERMCAP_md=$'\E[01;38;5;74m' \
+    LESS_TERMCAP_me=$'\E[0m' \
+    LESS_TERMCAP_se=$'\E[0m' \
+    LESS_TERMCAP_so=$'\E[38;5;246m' \
+    LESS_TERMCAP_ue=$'\E[0m' \
+    LESS_TERMCAP_us=$'\E[04;38;5;146m' \
+    man "$@"
+}
+
+config_PROMPT(){
+    local username='%n'
+    local hostname='%M'
+    local dir='%d'
+    local time24='%*'
+    PROMPT="%{$fg[cyan] ${time24}%}~%{$fg[magenta]${dir}%}~%{$fg[cyan]\$\$%}%{$reset_color%}"
+    RPROMPT=''
+}
+
+setxkbmap -option 'ctrl:nocaps' #disable caps lock
+
+
+export EDITOR='vim'
+export XAUTHORITY=/home/$USER/.Xauthority
+
+config_PROMPT
+
+archey3
