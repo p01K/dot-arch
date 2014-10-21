@@ -112,4 +112,4 @@
 
 ;; Enable auto-completion globally
 (global-auto-complete-mode t)
-
+(column-number-mode 1)
