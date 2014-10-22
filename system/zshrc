@@ -1,0 +1,116 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=4000
+SAVEHIST=4000
+setopt appendhistory autocd extendedglob notify
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/p01/.zshrc'
+
+autoload -U colors && colors
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+#
+
+########### tests #########
+zstyle ':completion:*' menu select
+setopt HIST_IGNORE_DUPS
+###################
+
+###################### generic ##########################
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -a'
+alias ls.rec='ls -R -l'
+alias grep='grep --colour -n'
+alias open='xdg-open'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..' 
+##################### /generic ##########################
+
+########### PACMAN SHORTCUTS ###################### 
+alias pac.refresh='sudo pacman -Sy'
+alias pac.install='sudo pacman -S' 
+alias pac.search='pacman -Ss'                                                                                                                                                 
+alias pac.syyu='sudo pacman -Syyu' #system                                                                                                                               
+alias pac.rm='sudo pacman -R'                                                                                                                                     
+alias pac.rmr='sudo pacman -Rsn'  #also remove unused
+alias pac.rm_force='sudo pacman -Rdd' #force removal                                                                                                                         
+alias pac.dis='pacman -Si'   #display extensive info                                                                                                            
+alias pac.orphan='sudo pacman -Qdt'                                                                                                                                           
+alias pac.cc='sudo pacman -Scc' #clean                                                                                                                             
+############ /PACMAN SHORTCUTS #####################
+
+alias dmesg='dmesg -L' #add colours to the dmesg output 
+alias ss.tcp_l='ss -rplt'
+
+kate.noerr(){
+  kate "$@" 2> /dev/null &
+}
+
+ssh.shark(){
+      ssh shark -t ssh $1
+}
+
+man(){
+    env LESS_TERMCAP_mb=$'\E[01;31m' \
+    LESS_TERMCAP_md=$'\E[01;38;5;74m' \
+    LESS_TERMCAP_me=$'\E[0m' \
+    LESS_TERMCAP_se=$'\E[0m' \
+    LESS_TERMCAP_so=$'\E[38;5;246m' \
+    LESS_TERMCAP_ue=$'\E[0m' \
+    LESS_TERMCAP_us=$'\E[04;38;5;146m' \
+    man "$@"
+}
+
+config_PROMPT(){
+    local username='%n'
+    local hostname='%M'
+    local dir='%d'
+    local time24='%*'
+    local integral=$'\u222B'
+    local reset="%{$reset_color%}"
+    local newline="%{\n%}"
+    [ -n "${KDE_FULL_SESSION}" ] && PROMPT="%{$fg_bold[white]$integral%}$reset%{$fg[cyan] ${time24}%}~%{$fg[white]${dir}%}~%{$fg[cyan]\$\$%}$reset" 
+    RPROMPT=''
+}
+
+tar.extract() { 
+    if [ -f $1 ] ; then 
+      case $1 in 
+        *.tar.bz2)   tar xjf $1     ;; 
+        *.tar.gz)    tar xzf $1     ;; 
+        *.bz2)       bunzip2 $1     ;; 
+        *.rar)       unrar e $1     ;; 
+        *.gz)        gunzip $1      ;; 
+        *.tar)       tar xf $1      ;; 
+        *.tbz2)      tar xjf $1     ;; 
+        *.tgz)       tar xzf $1     ;; 
+        *.zip)       unzip $1       ;; 
+        *.Z)         uncompress $1  ;; 
+        *.7z)        7z x $1        ;; 
+        *)     echo "'$1' cannot be extracted via extract()" ;; 
+         esac 
+     else 
+         echo "'$1' is not a valid file" 
+     fi 
+} 
+
+[ -n "$DISPLAY" ] && setxkbmap -option 'ctrl:nocaps' #disable caps lock
+
+
+export EDITOR='vim'
+export XAUTHORITY=/home/$USER/.Xauthority
+[ -n "${KDE_FULL_SESSION}" ] && PATH="$PATH:`ruby -e 'print Gem.user_dir'`/bin"
+
+config_PROMPT
+
+[ -n "${KDE_FULL_SESSION}" ] &&  alias pokerstars="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/PokerStars.EU/PokerStars.exe"
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+[ -n "${KDE_FULL_SESSION}" ] &&  archey3
