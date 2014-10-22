@@ -1,7 +1,7 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=4000
+SAVEHIST=4000
 setopt appendhistory autocd extendedglob notify
 bindkey -e
 # End of lines configured by zsh-newuser-install
@@ -33,23 +33,20 @@ alias ....='cd ../../..'
 ##################### /generic ##########################
 
 ########### PACMAN SHORTCUTS ###################### 
-alias pacman.refresh='sudo pacman -Sy'
-alias pacman.install='sudo pacman -S' 
-alias pacman.search='pacman -Ss'                                                                                                                                                 
-alias pacman.sys_ugd='sudo pacman -Syyu' #system                                                                                                                               
-alias pacman.rm='sudo pacman -R'                                                                                                                                     
-alias pacman.rmr='sudo pacman -Rsn'  #also remove unused                                                                                                                         
-alias pacman.dis='sudo pacman -Si'   #display extensive info                                                                                                            
-alias pacman.orphan='sudo pacman -Qdt'                                                                                                                                           
-alias pacman.cc='sudo pacman -Scc' #clean                                                                                                                             
+alias pac.refresh='sudo pacman -Sy'
+alias pac.install='sudo pacman -S' 
+alias pac.search='pacman -Ss'                                                                                                                                                 
+alias pac.syyu='sudo pacman -Syyu' #system                                                                                                                               
+alias pac.rm='sudo pacman -R'                                                                                                                                     
+alias pac.rmr='sudo pacman -Rsn'  #also remove unused
+alias pac.rm_force='sudo pacman -Rdd' #force removal                                                                                                                         
+alias pac.dis='pacman -Si'   #display extensive info                                                                                                            
+alias pac.orphan='sudo pacman -Qdt'                                                                                                                                           
+alias pac.cc='sudo pacman -Scc' #clean                                                                                                                             
 ############ /PACMAN SHORTCUTS #####################
 
 alias dmesg='dmesg -L' #add colours to the dmesg output 
 alias ss.tcp_l='ss -rplt'
-
-
-alias tar.e_bz2='tar xjf'
-alias tar.e_tar.gz='tar -zxvf'
 
 kate.noerr(){
   kate "$@" 2> /dev/null &
@@ -82,13 +79,36 @@ config_PROMPT(){
     RPROMPT=''
 }
 
-setxkbmap -option 'ctrl:nocaps' #disable caps lock
+tar.extract() { 
+    if [ -f $1 ] ; then 
+      case $1 in 
+        *.tar.bz2)   tar xjf $1     ;; 
+        *.tar.gz)    tar xzf $1     ;; 
+        *.bz2)       bunzip2 $1     ;; 
+        *.rar)       unrar e $1     ;; 
+        *.gz)        gunzip $1      ;; 
+        *.tar)       tar xf $1      ;; 
+        *.tbz2)      tar xjf $1     ;; 
+        *.tgz)       tar xzf $1     ;; 
+        *.zip)       unzip $1       ;; 
+        *.Z)         uncompress $1  ;; 
+        *.7z)        7z x $1        ;; 
+        *)     echo "'$1' cannot be extracted via extract()" ;; 
+         esac 
+     else 
+         echo "'$1' is not a valid file" 
+     fi 
+} 
+
+[ -n "$DISPLAY" ] && setxkbmap -option 'ctrl:nocaps' #disable caps lock
 
 
 export EDITOR='vim'
 export XAUTHORITY=/home/$USER/.Xauthority
-
+PATH="$PATH:`ruby -e 'print Gem.user_dir'`/bin"
 config_PROMPT
+
+alias pokerstars="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/PokerStars.EU/PokerStars.exe"
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
