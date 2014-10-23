@@ -19,6 +19,15 @@ zstyle ':completion:*' menu select
 setopt HIST_IGNORE_DUPS
 ###################
 
+##################### exports ###########################
+export ETH='enp0s25'
+export WLAN='wlp3s0'
+export XAUTHORITY=/home/$USER/.Xauthority
+export EDITOR='vim'
+export MAIL="$HOME/docs/mail"
+#################### /exports ##########################
+
+
 ###################### generic ##########################
 alias ls='ls --color=auto'
 alias ll='ls -l'
@@ -26,6 +35,7 @@ alias la='ls -a'
 alias ls.rec='ls -R -l'
 alias grep='grep --colour -n'
 alias open='xdg-open'
+alias i3lock='i3lock --color 000000'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -45,9 +55,20 @@ alias pac.orphan='sudo pacman -Qdt'
 alias pac.cc='sudo pacman -Scc' #clean                                                                                                                             
 ############ /PACMAN SHORTCUTS #####################
 
+########### networking ################################
 alias dmesg='dmesg -L' #add colours to the dmesg output 
 alias ss.tcp_l='ss -rplt'
+alias pon='sudo pon'  #maybe with nodetach
+alias poff='sudo poff'
+alias iw.conn="sudo iw dev $WLAN connect"
+alias iw.scan="sudo iw dev $WLAN scan"
+alias ip.wup="sudo ip link set $WLAN up"
 
+wpa_supplicant(){
+    sudo wpa_supplicant -i $WLAN -c /etc/wpa_supplicant/"$1".conf
+}
+
+########## /networking #################################
 kate.noerr(){
   kate "$@" 2> /dev/null &
 }
@@ -75,7 +96,8 @@ config_PROMPT(){
     local integral=$'\u222B'
     local reset="%{$reset_color%}"
     local newline="%{\n%}"
-    [ -n "${KDE_FULL_SESSION}" ] && PROMPT="%{$fg_bold[white]$integral%}$reset%{$fg[cyan] ${time24}%}~%{$fg[white]${dir}%}~%{$fg[cyan]\$\$%}$reset" 
+    PROMPT=' '
+    [ -n "${KDE_FULL_SESSION}" ] && PROMPT="%{$fg_bold[white]$integral%}$reset%{$fg[cyan] ${time24}%}~%{$fg[white]${dir}%}~%{$fg[cyan]\$\$%}$reset"$'\n\t\t\t   \$\$' 
     RPROMPT=''
 }
 
@@ -103,8 +125,6 @@ tar.extract() {
 [ -n "$DISPLAY" ] && setxkbmap -option 'ctrl:nocaps' #disable caps lock
 
 
-export EDITOR='vim'
-export XAUTHORITY=/home/$USER/.Xauthority
 [ -n "${KDE_FULL_SESSION}" ] && PATH="$PATH:`ruby -e 'print Gem.user_dir'`/bin"
 
 config_PROMPT
