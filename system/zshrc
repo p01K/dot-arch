@@ -64,7 +64,8 @@ alias iw.conn="sudo iw dev $WLAN connect"
 alias iw.scan="sudo iw dev $WLAN scan"
 alias ip.wup="sudo ip link set $WLAN up"
 
-wpa_supplicant(){
+function wpa.supplicant
+{
     sudo wpa_supplicant -i $WLAN -c /etc/wpa_supplicant/"$1".conf
 }
 
