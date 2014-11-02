@@ -10,7 +10,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
-
+set $alt Mod1
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
@@ -43,17 +43,27 @@ bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
+#bindsym $mod+j focus left
+#bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
 
-# alternatively, you can use the cursor keys:
-bindsym Control+j  workspace next
-bindsym Control+k  workspace prev 
-bindsym Control+a     workspace back_and_forth
+# p01 additional keybindings 
+bindsym Control+j  focus left
+bindsym Control+k  focus right 
+bindsym $mod+j  focus left
+bindsym $mod+k  focus right 
+bindsym Control+a  workspace back_and_forth
+bindsym Control+$alt+Right workspace next
+bindsym Control+$alt+Left workspace prev
+bindsym $alt+Tab  focus right
+bindsym $alt+Shift+Tab  focus left
 #bindsym $mod+Up move up
 #bindsym $mod+Right move right
+
+#some system keybindings
+bindsym XF86AudioRaiseVolume exec amixer set Master,0 2+
+bindsym XF86AudioLowerVolume exec amixer set Master,0 2-
 
 # move focused window
 bindsym $mod+Shift+j move left
