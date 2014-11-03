@@ -3,7 +3,7 @@ HISTFILE=~/.histfile
 HISTSIZE=4000
 SAVEHIST=4000
 setopt appendhistory autocd extendedglob notify
-bindkey -e
+#bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/p01/.zshrc'
@@ -23,7 +23,7 @@ setopt HIST_IGNORE_DUPS
 export ETH='enp0s25'
 export WLAN='wlp3s0'
 export XAUTHORITY=/home/$USER/.Xauthority
-export EDITOR='vim'
+export EDITOR='emacs'
 export MAIL="$HOME/docs/mail"
 #################### /exports ##########################
 
@@ -134,4 +134,18 @@ setPROMPT
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-[ -n "${KDE_FULL_SESSION}" ] &&  archey3
+
+
+#export t_Co=256
+#[ -n "${KDE_FULL_SESSION}" ] &&  export TERM="xterm-256color"
+
+#[[ -z "$TMUX" ]] && export TERM="screen-256color"
+if [[ "x$TERM" == "xxterm" ]] ; then
+    export TERM=xterm-256color
+fi
+
+if [[ -z "$TMUX" ]]; then 
+exec tmux
+else 
+    [ -n "${KDE_FULL_SESSION}" ] &&  archey3
+fi
