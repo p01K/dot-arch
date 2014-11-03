@@ -1,0 +1,19 @@
+xterm*termName: xterm-256color
+XTerm*locale: true 
+
+XTerm*savelines: 4096
+
+!XTerm*foreground: rgb:b2/b2/b2
+XTerm*foreground: rgb:00/ff/00
+XTerm*background: rgb:08/08/08
+
+XTerm*colour0:    rgb:28/28/28
+XTrem*colour1:	  rgb:00/ff/00
+XTerm*faceName:   Dejavu Sans Mono:size=10:antialias=false
+
+XTerm*font: 	  7x13
+
+XTerm*metaSendsEscape: true
+XTerm*TitleBar: off
+!Xterm*maximize: true
+XTerm*bordercolor: rgb:00/ff/00
