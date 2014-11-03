@@ -1,13 +1,4 @@
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=4000
-SAVEHIST=4000
-setopt appendhistory autocd extendedglob notify
-bindkey -e
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/p01/.zshrc'
-
 autoload -U colors && colors
 autoload -Uz compinit
 compinit
@@ -132,6 +123,12 @@ setPROMPT
 
 [ -n "${KDE_FULL_SESSION}" ] &&  alias pokerstars="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/PokerStars.EU/PokerStars.exe"
 
+[ -n "${KDE_FULL_SESSION}" ] &&  export TERM="xterm-256color"
+
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -n "${KDE_FULL_SESSION}" ] &&  archey3
+
+[[ -z "$TMUX" ]]  && exec tmux
+
+
