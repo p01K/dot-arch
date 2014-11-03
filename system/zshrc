@@ -43,16 +43,16 @@ alias ....='cd ../../..'
 ##################### /generic ##########################
 
 ########### PACMAN SHORTCUTS ###################### 
-alias pac.refresh='sudo pacman -Sy'
-alias pac.install='sudo pacman -S' 
-alias pac.search='pacman -Ss'                                                                                                                                                 
-alias pac.syyu='sudo pacman -Syyu' #system                                                                                                                               
-alias pac.rm='sudo pacman -R'                                                                                                                                     
-alias pac.rmr='sudo pacman -Rsn'  #also remove unused
-alias pac.rm_force='sudo pacman -Rdd' #force removal                                                                                                                         
-alias pac.dis='pacman -Si'   #display extensive info                                                                                                            
-alias pac.orphan='sudo pacman -Qdt'                                                                                                                                           
-alias pac.cc='sudo pacman -Scc' #clean                                                                                                                             
+alias pac.sy='sudo pacman -Sy'
+alias pac.s='sudo pacman -S' 
+alias pac.ss='pacman -Ss'                   
+alias pac.syyu='sudo pacman -Syyu' #full system  upgrade                                                                                                                 
+alias pac.r='sudo pacman -R'                                                                                                                                     
+alias pac.rsn='sudo pacman -Rsn'  #also remove unused
+alias pac.rdd='sudo pacman -Rdd' #force removal                                                                                                                     
+alias pac.si='pacman -Si'   #display extensive info                
+alias pac.qdt='sudo pacman -Qdt' #orphan packages                                                                                                                    
+alias pac.scc='sudo pacman -Scc' #clean pacman caches                                                                                                                    
 ############ /PACMAN SHORTCUTS #####################
 
 ########### networking ################################
@@ -89,7 +89,7 @@ man(){
     man "$@"
 }
 
-config_PROMPT(){
+setPROMPT(){
     local username='%n'
     local hostname='%M'
     local dir='%d'
@@ -128,7 +128,7 @@ tar.extract() {
 
 [ -n "${KDE_FULL_SESSION}" ] && PATH="$PATH:`ruby -e 'print Gem.user_dir'`/bin"
 
-config_PROMPT
+setPROMPT
 
 [ -n "${KDE_FULL_SESSION}" ] &&  alias pokerstars="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/PokerStars.EU/PokerStars.exe"
 
