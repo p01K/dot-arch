@@ -18,12 +18,12 @@
 
 (defvar my-packages
   '(rainbow-mode          ; Color color-codes #ffffff
-;    rainbow-delimiters    ; Colored parens pairs
+    rainbow-delimiters    ; Colored parens pairs
 ;    doctags               ; Docygen docs
 ;    tuareg                ; OCaml
 ;    arduino-mode          ; For arduino editing
-;    auctex                ; LaTeX
-;    auctex-latexmk        ; LatexMk for auctex
+    auctex                ; LaTeX
+    auctex-latexmk        ; LatexMk for auctex
 ;    ag                    ; ag to replace grep
 ;    ac-math               ; auto complete math symbols
 ;    helm                  ; helm
@@ -43,13 +43,22 @@
 ;    whole-line-or-region  ; If no region cut/copy the line
 ;    ecb                   ; Code browser
     auto-complete         ; Auto completion
-;    auto-complete-auctex  ; Auto completion for auctex
+    auto-complete-auctex  ; Auto completion for auctex
 ;    smex
 ;    rcirc-color           ; color usernames in rcirc
 ;    rcirc-notify          ; libnotify notifications from rcirc
 ;    cmake-mode
 ;    magit                 ; Git
 ;    ido-ubiquitous
+    dired-subtree
+    dired-toggle
+    dired-k
+    dired-rainbow
+    nav
+    sbt-mode  ; sbt mode
+    scala-mode2  ; scala mode
+    ruby-mode   ; ruby
+ ;   ruby-tools-mode  ; ruby
     xclip                 ; copy paste with X
     dirtree               ; directory view 
     undo-tree)            ; Visualize undo
@@ -61,9 +70,11 @@
     (package-install p)))
 
 ;; Turn off mouse interface early in startup to avoid momentary display
-(tool-bar-mode -1)
-;(scroll-bar-mode -1)
+(if (functionp 'tool-bar-mode) (tool-bar-mode -1))
 (menu-bar-mode -1)
+;;(setq scroll-step 1)
+(when (require 'mwheel nil 'noerror)
+  (mouse-wheel-mode 1))
 (blink-cursor-mode 0)
 
 (xterm-mouse-mode t)       ; Enable mouse in terminal
@@ -75,6 +86,12 @@
 (global-set-key [mouse-2] 'mouse-yank-primary)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+;; Enable x-clipboard interaction
+(if (fboundp 'xclip-mode) (xclip-mode 1))
+
+(require 'linum)
+(global-linum-mode 1) ; Enable linenumbers on left margin
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -121,7 +138,18 @@
 (column-number-mode 1)
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                        FLYCHECKING
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-hook 'prog-mode-hook 'flycheck-mode)
+(setq flycheck-check-syntax-automatically '(save))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                 KEYBINDINGS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; emacs comment shortcut
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun comment-or-uncomment-region-or-line ()
@@ -135,6 +163,19 @@
 
 (global-set-key (kbd "C-d") 'comment-region)
 (global-set-key (kbd "C-D") 'comment-or-uncomment-region-or-line)
+
+;; Use regex searches by default.
+(global-set-key (kbd "C-f") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+
+;; alt-d kill word
+(global-set-key (kbd "<M-delete>") 'kill-word)
+(global-set-key (kbd "<M-backspace>") 'backward-kill-word)
+
+(global-set-key [f1] 'nav)
+(global-set-key [f2] 'ibuffer)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
