@@ -41,7 +41,7 @@
  ;   color-theme-github
 ;    tango-theme
 ;    edit-server           ; Chrome plugin
-    browse-kill-ring      ; As it name implies
+;    browse-kill-ring      ; As it name implies
     markdown-mode         ; Markdown mode
     whole-line-or-region  ; If no region cut/copy the line
 ;    ecb                   ; Code browser
@@ -130,8 +130,8 @@
     (ansi-color-apply-on-region compilation-filter-start (point-max))))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
-(require 'browse-kill-ring)
-(browse-kill-ring-default-keybindings)
+;(require 'browse-kill-ring)
+;(browse-kill-ring-default-keybindings)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -325,6 +325,8 @@
              (add-to-list 'ac-sources 'ac-source-semantic)
              (add-to-list 'ac-sources 'ac-source-gtags)
              (setq-default srecode-minor-mode 1) ; enable srecode minor mode
+	     (local-set-key (kbd "C-d") 'comment-or-uncomment-region-or-line)
+	     (local-set-key (kbd "C-D") 'comment-or-uncomment-region-or-line)
              ))
 
 ;;(defun terminal-init-gnome ()
@@ -334,6 +336,8 @@
 ;; Enable auto-completion globally
 (global-auto-complete-mode t)
 (column-number-mode 1)
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -373,7 +377,22 @@
 (global-set-key [f1] 'nav)
 (global-set-key [f2] 'ibuffer)
 
+(global-set-key (kbd "C-i") 'switch-to-buffer)
 
+(setq-default message-log-max nil)
+(kill-buffer "*Messages*")
+
+(defun remove-scratch-buffer ()
+  (if (get-buffer "*scratch*")
+      (kill-buffer "*scratch*")))
+(add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)
+
+;; (kill-buffer "*scratch*")
+
+
+(global-set-key (kbd "M-<right>") 'next-buffer )
+(global-set-key (kbd "M-<left>") 'previous-buffer )
+		;; (global-set-key (kbd "C-i") 'switch-to-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
