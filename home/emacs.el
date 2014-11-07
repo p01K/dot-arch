@@ -1,9 +1,6 @@
-(global-set-key [f12] 'compile)
-
 (setq make-backup-files nil) ;no backup files 
 
 (cua-mode t) ;remap C-c,C-v,C-x to normal
-
 
 (require 'package)
 (add-to-list 'package-archives
@@ -12,6 +9,8 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
+
+;; (set-background-color "white")
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -27,20 +26,24 @@
 ;    ag                    ; ag to replace grep
 ;    ac-math               ; auto complete math symbols
 ;    helm                  ; helm
-     flycheck              ; Compile and warn on the fly
-;    flycheck-color-mode-line ; Change color in mode line according to
-;    flycheck-tip          ; pop-up with info about the error
+    flycheck              ; Compile and warn on the fly
+    flycheck-color-mode-line ; Change color in mode line according to
+    flycheck-tip          ; pop-up with info about the error
 ;    git-gutter+           ; Show git diffs (+-)
 ;    git-gutter-fringe+    ; Show git diffs (+-)
 ;    smart-tabs-mode       ; Use tabs for indentation and spaces for
                           ; alignment
 ;    diff-hl               ; Highlights diffs to HEAD
 ;    password-store        ; Interact with the password-store
-;    monokai-theme         ; the theme
+    monokai-theme         ; the theme
+;    color-theme
+;   color-theme-molokai
+ ;   color-theme-github
+;    tango-theme
 ;    edit-server           ; Chrome plugin
-;    browse-kill-ring      ; As it name implies
-;    markdown-mode         ; Markdown mode
-;    whole-line-or-region  ; If no region cut/copy the line
+    browse-kill-ring      ; As it name implies
+    markdown-mode         ; Markdown mode
+    whole-line-or-region  ; If no region cut/copy the line
 ;    ecb                   ; Code browser
     auto-complete         ; Auto completion
     auto-complete-auctex  ; Auto completion for auctex
@@ -49,25 +52,31 @@
 ;    rcirc-notify          ; libnotify notifications from rcirc
 ;    cmake-mode
 ;    magit                 ; Git
-;    ido-ubiquitous
-    dired-subtree
-    dired-toggle
-    dired-k
-    dired-rainbow
-    nav
-    sbt-mode  ; sbt mode
-    scala-mode2  ; scala mode
-    ruby-mode   ; ruby
- ;   ruby-tools-mode  ; ruby
+   ido-ubiquitous
+;    dired-subtree
+;    dired-toggle
+;    dired-k
+;    dired-rainbow
+   nav
+   sbt-mode  ; sbt mode
+   scala-mode2  ; scala mode
+   ruby-mode   ; ruby
+					;    ruby-tools-mode  ; ruby
     xclip                 ; copy paste with X
     dirtree               ; directory view 
     undo-tree)            ; Visualize undo
-    
+  
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                          SETTINGS
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (functionp 'tool-bar-mode) (tool-bar-mode -1))
@@ -78,6 +87,24 @@
 (blink-cursor-mode 0)
 
 (xterm-mouse-mode t)       ; Enable mouse in terminal
+
+;(add-hook 'after-make-frame-functions
+;  (lambda (my_frame)
+(when (display-graphic-p)
+  ;; Font size
+  (define-key global-map (kbd "C-+") 'text-scale-increase)
+  (define-key global-map (kbd "C--") 'text-scale-decrease)
+  ;;
+  (set-frame-size (selected-frame) 90 50)
+  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+  (tooltip-mode -1)
+  (mouse-wheel-mode t)
+  (set-default-font "Inconsolata-12")
+  )
+
+;; Enable set-goal-column
+(put 'set-goal-column 'disabled nil)
+
 
 ;;X11 clipboard activation
 (setq x-select-enable-primary nil)
@@ -93,10 +120,181 @@
 (require 'linum)
 (global-linum-mode 1) ; Enable linenumbers on left margin
 
+;; Enable ansi coloring
+(require 'ansi-color)
+;; enable ansi colors in shell-mode
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+;; enable ansi colors in compile-mode
+(defun colorize-compilation-buffer ()
+  (when (eq major-mode 'compilation-mode)
+    (ansi-color-apply-on-region compilation-filter-start (point-max))))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+(require 'browse-kill-ring)
+(browse-kill-ring-default-keybindings)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;                        AUTO COMPLETE
+;;;;                      CHANGE MODE-LINE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set the modeline to tell me the filename, hostname, etc..
+(setq-default
+ mode-line-format
+ (list
+  "%@"
+  ; the name of the buffer (i.e. filename)
+  ; note this gets automatically highlighted
+  'mode-line-buffer-identification
+  " "
+  ; */% indicators if the file has been modified
+  ;'mode-line-mule-info
+  ;'mode-line-modified
+  "["
+  ;; insert vs overwrite mode, input-method in a tooltip
+  '(:eval (propertize
+           (if overwrite-mode "Ovr" "Ins")
+           'face 'font-lock-preprocessor-face
+           'help-echo (concat "Buffer is in "
+                              (if overwrite-mode "overwrite" "insert") " mode")))
+  ;; was this buffer modified since the last save?
+  '(:eval (when (buffer-modified-p)
+            (concat ","  (propertize "Mod"
+                                     'face 'font-lock-warning-face
+                                     'help-echo "Buffer has been modified"))))
+
+  ;; is this buffer read-only?
+  '(:eval (when buffer-read-only
+            (concat ","  (propertize "RO"
+                                     'face 'font-lock-type-face
+                                     'help-echo "Buffer is read-only"))))
+  "] "
+  ; line, column, file %
+  'mode-line-position
+  ; time ++
+  ;'global-mode-string
+  ;; add the time, with the date and the emacs uptime in the tooltip
+  '(:eval (propertize (format-time-string "%H:%M")
+                      'face 'bold
+                      'help-echo
+                      (concat (format-time-string "%c; ")
+                              (emacs-uptime "Uptime:%hh"))))
+  ;; check for mails
+  '(:eval (if (/= new-mail 0)
+              (concat " " (propertize (concat (number-to-string new-mail)
+                                              " mail(s)")
+                                      'face 'font-lock-warning-face
+                                      'help-echo "You 've got mail"))))
+  (display-time-mode 1)
+  " "
+  ; if vc-mode is in effect, display version control
+  ; info here
+  `vc-mode
+  ; hostname
+  ;        'system-name
+  ; major and minor modes in effect
+  'mode-line-modes
+  ; if which-func-mode is in effect, display which
+  ; function we are currently in.
+  '(which-func-mode ("" which-func-format "--"))
+  ; dashes sufficient to fill rest of modeline.
+  ;        "-%-"
+  )
+ )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                           THEME IT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load-theme 'monokai t) ; set theme
+;(load-theme 'heroku t) ; set theme
+
+;(load-theme 'tango-dark t) ; set theme
+
+;; make background transparent
+(let ((class '((class color) (min-colors 89))))
+  (custom-theme-set-faces
+   'monokai
+   ;   'tango-dark
+   ;; Ensure sufficient contrast on 256-color xterms.
+   ;;`(mode-line ((,class (:background "#005555" :foreground "white"))))
+   ;; make it transparent
+   ;`(default ((,class (:background nil))))
+   ;;`(default ((,class (:foreground "#000000":background "#ffffff"))))
+   ;;  `(mode-line-inactive
+   ;;    ((,class (:background "#575757" :foreground "#eeeeec"))))
+   ))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                          IDO SETUP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Use ido
+;; (ido-mode t)
+;; (ido-ubiquitous t) ; IDO in even more places
+;; (setq
+;;  ido-enable-prefix nil
+;;  ido-enable-flex-maatching t
+;;  ido-auto-merge-work-directories-length nil
+;;  ido-create-new-buffer 'always
+;;  ido-use-filename-at-point 'guess
+;;  ido-use-virtual-buffers t
+;;  ido-handle-duplicate-virtual-buffers 2
+;;  ido-max-prospects 10
+;; )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                    HIGHLIGHT NASTY THINGS
+;;;;(Trailing spaces, text past 80 characters, tabs, empty lines)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'whitespace)
+(setq-default
+ whitespace-style '(face
+;                    spaces
+                    tabs
+                    empty
+                    lines-tail
+                    trailing
+                    tab-mark
+                    )
+ whitespace-line-column 80
+ whitespace-display-mappings
+ '(
+   (space-mark ?\ [?\u00B7] [?.])         ; space - centered dot
+   (space-mark ?\xA0 [?\u00A4] [?_])      ; hard space - currency
+   (newline-mark ?\n [?$ ?\n])            ; eol - dollar sign
+   (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t]) ; tab - left quote mark
+   )
+ )
+(global-whitespace-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                      SMARTPARENS CONFIG
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; (require 'smartparens-config)      ; Init smartparens
+;(sp-use-smartparens-bindings)     ; use the default bindings
+;; (global-set-key (kbd "C-M-f") 'sp-forward-sexp)
+;; (global-set-key (kbd "C-M-b") 'sp-backward-sexp)
+;; (global-set-key (kbd "C-M-d") 'sp-down-sexp)
+;; (global-set-key (kbd "C-M-a") 'sp-backward-down-sexp)
+;; (global-set-key (kbd "C-S-a") 'sp-beginning-of-sexp)
+;; (global-set-key (kbd "C-S-d") 'sp-end-of-sexp)
+;; (global-set-key (kbd "C-M-n") 'sp-up-sexp)
+;; (global-set-key (kbd "C-M-p") 'sp-backward-sexp)
+;; (global-set-key (kbd "C-M-k") 'sp-kill-sexp)
+;; (global-set-key (kbd "C-M-w") 'sp-copy-sexp)
+;; (smartparens-global-mode 1)        ; Enable smartparens
+;; (show-smartparens-global-mode t)   ; Highlight matching pairs
+
+;; other parens settings NOT from smartparens
+(electric-pair-mode 1)            ; Autoclose Brackets/Braces
+(show-paren-mode t)               ; Highlight matching parenthesis
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                        AUTO COMPLETE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)                     ; Load the defaults
@@ -177,16 +375,34 @@
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                      ADD MARKDOWN MODE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-hook 'markdown-mode-hook
+          '(lambda() (progn
+                       (setq-default markdown-content-type 'text/html)
+                       (setq-default markdown-coding-system 'utf-8)
+                       )))
+;; Trailing whitespace is significant in Markdown, so don't mess with it
+(defadvice delete-trailing-whitespace (around disable-in-markdown activate)
+  (unless (eq major-mode 'markdown-mode)
+    ad-do-it))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                        SCROLLING FIX
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun up-one () (interactive) (scroll-up 1))
+(defun down-one () (interactive) (scroll-down 1))
+(global-set-key (kbd "<mouse-4>") 'down-one)
+(global-set-key (kbd "<mouse-5>") 'up-one)
 
 
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; handle tmux's xterm-keys
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;   setw -g xterm-keys on
 (if (getenv "TMUX")
     (progn
@@ -276,4 +492,4 @@
       ))
       )
   )
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
