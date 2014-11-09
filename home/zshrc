@@ -54,15 +54,15 @@ alias ....='cd ../../..'
 
 ########### PACMAN SHORTCUTS ###################### 
 alias pac.sy='sudo pacman -Sy'
-alias pac.s='sudo pacman -S' 
-alias pac.ss='pacman -Ss'                   
+alias pac.s='sudo pacman -S'
+alias pac.ss='pacman -Ss'
 alias pac.syyu='sudo pacman -Syyu' #full system  upgrade                                                                                                                 
 alias pac.r='sudo pacman -R'                                                                                                                                     
 alias pac.rsn='sudo pacman -Rsn'  #also remove unused
 alias pac.rdd='sudo pacman -Rdd' #force removal                                                                                                                     
 alias pac.si='pacman -Si'   #display extensive info                
-alias pac.qdt='sudo pacman -Qdt' #orphan packages                                                                                                                    
-alias pac.scc='sudo pacman -Scc' #clean pacman caches                                                                                                                    
+alias pac.qdt='sudo pacman -Qdt' #orphan packages                                                                                                               
+alias pac.scc='sudo pacman -Scc' #clean pacman caches                                                                                         
 ############ /PACMAN SHORTCUTS #####################
 
 ########### networking ################################
@@ -107,8 +107,7 @@ setPROMPT(){
     local integral=$'\u222B'
     local reset="%{$reset_color%}"
     local newline="%{\n%}"
-    PROMPT=' '
-    [ -n "${KDE_FULL_SESSION}" ] && PROMPT="%{$fg_bold[white]$integral%}$reset%{$fg[cyan] ${time24}%}~%{$fg[white]${dir}%}~%{$fg[cyan]\$\$%}$reset"$'\n\t\t\t   \$\$' 
+    PROMPT="%{$fg_bold[white]$integral%}$reset%{$fg[cyan] ${time24}%}~%{$fg[white]${dir}%}~%{$fg[cyan]\$\$%}$reset"$'\n\t\t\t   \$\$' 
     RPROMPT=''
 }
 
@@ -135,28 +134,21 @@ tar.extract() {
 
 [ -n "$DISPLAY" ] && setxkbmap -option 'ctrl:nocaps' #disable caps lock
 
+PROMPT=' '
 
-[ -n "${KDE_FULL_SESSION}" ] && PATH="$PATH:`ruby -e 'print Gem.user_dir'`/bin"
+if [[ -n "${KDE_FULL_SESSION}" ]]; then 
+    PATH="$PATH:`ruby -e 'print Gem.user_dir'`/bin"
+    alias pokerstars="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/PokerStars.EU/PokerStars.exe"
 
-setPROMPT
+    export TERM=screen-256color
 
-[ -n "${KDE_FULL_SESSION}" ] &&  alias pokerstars="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/PokerStars.EU/PokerStars.exe"
+    if [[ -z "$TMUX" ]]; then 
+	exec tmux
+    else 
+	[ -n "${KDE_FULL_SESSION}" ] &&  archey3
+    fi
+
+    setPROMPT
+fi
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-
-
-#export t_Co=256
-#[ -n "${KDE_FULL_SESSION}" ] &&  export TERM="xterm-256color"
-
-#[[ -z "$TMUX" ]] && export TERM="screen-256color"
-#if [[ "x$TERM" == "xxterm" ]] ; then
-    
-export TERM=screen-256color
-#fi
-
-if [[ -z "$TMUX" ]]; then 
-    exec tmux
-else 
-    [ -n "${KDE_FULL_SESSION}" ] &&  archey3
-fi
