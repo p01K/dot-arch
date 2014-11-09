@@ -10,6 +10,8 @@
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 
+;; (set-background-color "white")
+
 (when (not package-archive-contents)
   (package-refresh-contents))
 
@@ -34,13 +36,13 @@
 ;    diff-hl               ; Highlights diffs to HEAD
 ;    password-store        ; Interact with the password-store
     monokai-theme         ; the theme
-    color-theme-solarized
+;    color-theme
 ;   color-theme-molokai
  ;   color-theme-github
 ;    tango-theme
 ;    edit-server           ; Chrome plugin
 ;    browse-kill-ring      ; As it name implies
-;    markdown-mode         ; Markdown mode
+    markdown-mode         ; Markdown mode
     whole-line-or-region  ; If no region cut/copy the line
 ;    ecb                   ; Code browser
     auto-complete         ; Auto completion
@@ -50,22 +52,20 @@
 ;    rcirc-notify          ; libnotify notifications from rcirc
 ;    cmake-mode
 ;    magit                 ; Git
-;   ido-ubiquitous
+   ido-ubiquitous
 ;    dired-subtree
 ;    dired-toggle
 ;    dired-k
 ;    dired-rainbow
-    speedbar
-    sr-speedbar
-    nav
-    sbt-mode  ; sbt mode
-    scala-mode2  ; scala mode
-    ruby-mode   ; ruby
-;    ruby-tools-mode  ; ruby
+   nav
+   sbt-mode  ; sbt mode
+   scala-mode2  ; scala mode
+   ruby-mode   ; ruby
+					;    ruby-tools-mode  ; ruby
     xclip                 ; copy paste with X
- ;   dirtree               ; directory view 
- ;  undo-tree
-)            ; Visualize undo
+    dirtree               ; directory view 
+    undo-tree)            ; Visualize undo
+  
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -130,53 +130,14 @@
     (ansi-color-apply-on-region compilation-filter-start (point-max))))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
-;; ;(require 'browse-kill-ring)
-;; ;(browse-kill-ring-default-keybindings)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                           TABBAR
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; (speedbar-change-initial-expansion-list "buffers")
-;; (global-set-key  [f3] 'speedbar-get-focus)
-
-;; (require 'tabbar)
-;; ; turn on the tabbar
-;; (tabbar-mode t)
-;; ; define all tabs to be one of 3 possible groups: “Emacs Buffer”, “Dired”,
-;; ;“User Buffer”.
-
-;; (defun tabbar-buffer-groups ()
-;;   "Return the list of group names the current buffer belongs to.
-;; This function is a custom function for tabbar-mode's tabbar-buffer-groups.
-;; This function group all buffers into 3 groups:
-;; Those Dired, those user buffer, and those emacs buffer.
-;; Emacs buffer are those starting with “*”."
-;;   (list
-;;    (cond
-;;     ((string-equal "*" (substring (buffer-name) 0 1))
-;;      "Emacs Buffer"
-;;      )
-;;     ((eq major-mode 'dired-mode)
-;;      "Dired"
-;;      )
-;;     (t
-;;      "User Buffer"
-;;      )
-;;     ))) 
-
-;; (setq tabbar-buffer-groups-function 'tabbar-buffer-groups)
-
-;; (global-set-key [M-s-left] 'tabbar-backward)
-;; (global-set-key [M-s-right] 'tabbar-forward)
+;(require 'browse-kill-ring)
+;(browse-kill-ring-default-keybindings)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;;;                      CHANGE MODE-LINE
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; Set the modeline to tell me the filename, hostname, etc..
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                      CHANGE MODE-LINE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set the modeline to tell me the filename, hostname, etc..
 (setq-default
  mode-line-format
  (list
@@ -245,20 +206,23 @@
 ;;;;                           THEME IT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-theme 'monokai t) ; set theme
+;(load-theme 'heroku t) ; set theme
+
+;(load-theme 'tango-dark t) ; set theme
 
 ;; make background transparent
-;; (let ((class '((class color) (min-colors 89))))
-;;    (custom-theme-set-faces
-;;    'solarized-dark
-;;    ;   'tango-dark
-;;    ;; Ensure sufficient contrast on 256-color xterms.
-;;    ;;`(mode-line ((,class (:background "#002B36" ))))
-;;    ;; make it transparent
-;;    ;`(default ((,class (:background nil))))
-;;    `(default ((,class (:background "#073642"))))
-;;    ;;  `(mode-line-inactive
-;;    ;;    ((,class (:background "#575757" :foreground "#eeeeec"))))
-;; ))
+(let ((class '((class color) (min-colors 89))))
+  (custom-theme-set-faces
+   'monokai
+   ;   'tango-dark
+   ;; Ensure sufficient contrast on 256-color xterms.
+   ;;`(mode-line ((,class (:background "#005555" :foreground "white"))))
+   ;; make it transparent
+   ;`(default ((,class (:background nil))))
+   ;;`(default ((,class (:foreground "#000000":background "#ffffff"))))
+   ;;  `(mode-line-inactive
+   ;;    ((,class (:background "#575757" :foreground "#eeeeec"))))
+   ))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -293,7 +257,7 @@
                     trailing
                     tab-mark
                     )
- whitespace-line-column 110
+ whitespace-line-column 80
  whitespace-display-mappings
  '(
    (space-mark ?\ [?\u00B7] [?.])         ; space - centered dot
@@ -324,7 +288,7 @@
 ;; (show-smartparens-global-mode t)   ; Highlight matching pairs
 
 ;; other parens settings NOT from smartparens
-;; (electric-pair-mode 1)            ; Autoclose Brackets/Braces
+(electric-pair-mode 1)            ; Autoclose Brackets/Braces
 (show-paren-mode t)               ; Highlight matching parenthesis
 
 
@@ -365,6 +329,10 @@
 	     (local-set-key (kbd "C-D") 'comment-or-uncomment-region-or-line)
              ))
 
+;;(defun terminal-init-gnome ()
+;;  "Terminal initialization function for gnome-terminal."
+;;  (tty-run-terminal-initialization (selected-frame) "xterm"))
+
 ;; Enable auto-completion globally
 (global-auto-complete-mode t)
 (column-number-mode 1)
@@ -379,9 +347,9 @@
 (setq flycheck-check-syntax-automatically '(save))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                 KEYBINDINGS
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; emacs comment shortcut
@@ -399,8 +367,8 @@
 (global-set-key (kbd "C-D") 'comment-or-uncomment-region-or-line)
 
 ;; Use regex searches by default.
-;;(global-set-key (kbd "C-f") 'isearch-forward-regexp)
-;;(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-f") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
 
 ;; alt-d kill word
 (global-set-key (kbd "<M-delete>") 'kill-word)
@@ -409,52 +377,37 @@
 (global-set-key [f1] 'nav)
 (global-set-key [f2] 'ibuffer)
 
+(global-set-key (kbd "C-i") 'switch-to-buffer)
+
+(setq-default message-log-max nil)
+(kill-buffer "*Messages*")
+
 (defun remove-scratch-buffer ()
   (if (get-buffer "*scratch*")
       (kill-buffer "*scratch*")))
 (add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;                          BUFFER SWITCHING    
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun next-user-buffer ()
-  "Switch to the next user buffer.
- (buffer name does not start with “*”.)"
-  (interactive)
-  (next-buffer)
-  (let ((i 0))
-    (while (and (string-equal "*" (substring (buffer-name) 0 1)) (< i 20))
-      (setq i (1+ i)) (next-buffer))))
-
-(defun previous-user-buffer ()
-  "Switch to the previous user buffer.
- (buffer name does not start with “*”.)"
-  (interactive)
-  (previous-buffer)
-  (let ((i 0))
-    (while (and (string-equal "*" (substring (buffer-name) 0 1)) (< i 20))
-      (setq i (1+ i)) (previous-buffer))))
+;; (kill-buffer "*scratch*")
 
 
-(global-set-key (kbd "M-<right>") 'next-user-buffer )
-(global-set-key (kbd "M-<left>") 'previous-user-buffer )
-(global-set-key (kbd "C-f") 'switch-to-buffer)
+(global-set-key (kbd "M-<right>") 'next-buffer )
+(global-set-key (kbd "M-<left>") 'previous-buffer )
+		;; (global-set-key (kbd "C-i") 'switch-to-buffer)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                      ADD MARKDOWN MODE
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (add-hook 'markdown-mode-hook
-;;           '(lambda() (progn
-;;                        (setq-default markdown-content-type 'text/html)
-;;                        (setq-default markdown-coding-system 'utf-8)
-;;                        )))
-;; ;; Trailing whitespace is significant in Markdown, so don't mess with it
-;; (defadvice delete-trailing-whitespace (around disable-in-markdown activate)
-;;   (unless (eq major-mode 'markdown-mode)
-;;     ad-do-it))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-hook 'markdown-mode-hook
+          '(lambda() (progn
+                       (setq-default markdown-content-type 'text/html)
+                       (setq-default markdown-coding-system 'utf-8)
+                       )))
+;; Trailing whitespace is significant in Markdown, so don't mess with it
+(defadvice delete-trailing-whitespace (around disable-in-markdown activate)
+  (unless (eq major-mode 'markdown-mode)
+    ad-do-it))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -464,6 +417,7 @@
 (defun down-one () (interactive) (scroll-down 1))
 (global-set-key (kbd "<mouse-4>") 'down-one)
 (global-set-key (kbd "<mouse-5>") 'up-one)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; handle tmux's xterm-keys
