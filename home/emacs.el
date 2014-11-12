@@ -82,11 +82,8 @@
 (if (functionp 'tool-bar-mode) (tool-bar-mode -1))
 (menu-bar-mode -1)
 ;;(setq scroll-step 1)
-(when (require 'mwheel nil 'noerror)
-  (mouse-wheel-mode 1))
-(blink-cursor-mode 0)
 
-(xterm-mouse-mode t)       ; Enable mouse in terminal
+;; (xterm-mouse-mode t)       ; Enable mouse in terminal
 
 ;(add-hook 'after-make-frame-functions
 ;  (lambda (my_frame)
@@ -415,7 +412,7 @@
 (add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;                          BUFFER SWITCHING    
+;                          BUFFER/WINDOW SWITCHING    
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun next-user-buffer ()
@@ -441,6 +438,14 @@
 (global-set-key (kbd "M-<left>") 'previous-user-buffer )
 (global-set-key (kbd "C-f") 'switch-to-buffer)
 
+;; (global-set-key (kbd "C-x <right>") 'windmove-right )
+(global-set-key (kbd "C-x <up>") 'windmove-up)
+(global-set-key (kbd "C-x <down>") 'windmove-down)
+(global-set-key (kbd "C-x <right>") 'windmove-right)
+(global-set-key (kbd "C-x <left>") 'windmove-left)
+
+;; (global-set-key (kbd "M-<left>") 'previous-user-buffer )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -458,12 +463,19 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;                        SCROLLING FIX
+;;;;                        MOUSE/SCROLLING FIX
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun up-one () (interactive) (scroll-up 1))
 (defun down-one () (interactive) (scroll-down 1))
 (global-set-key (kbd "<mouse-4>") 'down-one)
 (global-set-key (kbd "<mouse-5>") 'up-one)
+(require 'mouse)
+(xterm-mouse-mode t)
+(defun track-mouse (e)) 
+(setq mouse-sel-mode t)
+(when (require 'mwheel nil 'noerror)
+  (mouse-wheel-mode 1))
+(blink-cursor-mode 0)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; handle tmux's xterm-keys
