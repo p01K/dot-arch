@@ -40,7 +40,7 @@
 ;    tango-theme
 ;    edit-server           ; Chrome plugin
 ;    browse-kill-ring      ; As it name implies
-;    markdown-mode         ; Markdown mode
+    markdown-mode         ; Markdown mode
     whole-line-or-region  ; If no region cut/copy the line
 ;    ecb                   ; Code browser
     auto-complete         ; Auto completion
@@ -49,12 +49,12 @@
 ;    rcirc-color           ; color usernames in rcirc
 ;    rcirc-notify          ; libnotify notifications from rcirc
 ;    cmake-mode
-;    magit                 ; Git
+    magit                 ; Git
 ;   ido-ubiquitous
 ;    dired-subtree
-;    dired-toggle
+    dired-toggle
 ;    dired-k
-;    dired-rainbow
+    dired-rainbow
     speedbar
     sr-speedbar
     nav
@@ -238,9 +238,9 @@
  )
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;                           THEME IT
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                                         THEME IT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-theme 'monokai t) ; set theme
 
 ;; make background transparent
@@ -366,15 +366,12 @@
 (global-auto-complete-mode t)
 (column-number-mode 1)
 
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                        FLYCHECKING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (add-hook 'prog-mode-hook 'flycheck-mode)
 (setq flycheck-check-syntax-automatically '(save))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                 KEYBINDINGS
@@ -406,14 +403,14 @@
 (global-set-key [f1] 'nav)
 (global-set-key [f2] 'ibuffer)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                          BUFFERS/WINDOW SWITCHING
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun remove-scratch-buffer ()
   (if (get-buffer "*scratch*")
       (kill-buffer "*scratch*")))
 (add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;                          BUFFER/WINDOW SWITCHING    
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun next-user-buffer ()
   "Switch to the next user buffer.
@@ -433,45 +430,42 @@
     (while (and (string-equal "*" (substring (buffer-name) 0 1)) (< i 20))
       (setq i (1+ i)) (previous-buffer))))
 
-
 (global-set-key (kbd "M-<right>") 'next-user-buffer )
 (global-set-key (kbd "M-<left>") 'previous-user-buffer )
 (global-set-key (kbd "C-f") 'switch-to-buffer)
 
-;; (global-set-key (kbd "C-x <right>") 'windmove-right )
 (global-set-key (kbd "C-x <up>") 'windmove-up)
 (global-set-key (kbd "C-x <down>") 'windmove-down)
 (global-set-key (kbd "C-x <right>") 'windmove-right)
 (global-set-key (kbd "C-x <left>") 'windmove-left)
-
-;; (global-set-key (kbd "M-<left>") 'previous-user-buffer )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                      ADD MARKDOWN MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (add-hook 'markdown-mode-hook
-;;           '(lambda() (progn
-;;                        (setq-default markdown-content-type 'text/html)
-;;                        (setq-default markdown-coding-system 'utf-8)
-;;                        )))
-;; ;; Trailing whitespace is significant in Markdown, so don't mess with it
-;; (defadvice delete-trailing-whitespace (around disable-in-markdown activate)
-;;   (unless (eq major-mode 'markdown-mode)
-;;     ad-do-it))
 
+(add-hook 'markdown-mode-hook
+          '(lambda() (progn
+                       (setq-default markdown-content-type 'text/html)
+                       (setq-default markdown-coding-system 'utf-8)
+                       )))
+;; ;; Trailing whitespace is significant in Markdown, so don't mess with it
+(defadvice delete-trailing-whitespace (around disable-in-markdown activate)
+  (unless (eq major-mode 'markdown-mode)
+    ad-do-it))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                        MOUSE/SCROLLING FIX
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun up-one () (interactive) (scroll-up 1))
 (defun down-one () (interactive) (scroll-down 1))
 (global-set-key (kbd "<mouse-4>") 'down-one)
 (global-set-key (kbd "<mouse-5>") 'up-one)
 (require 'mouse)
 (xterm-mouse-mode t)
-(defun track-mouse (e)) 
+(defun track-mouse (e))
 (setq mouse-sel-mode t)
 (when (require 'mwheel nil 'noerror)
   (mouse-wheel-mode 1))
