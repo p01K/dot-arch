@@ -22,7 +22,8 @@ bindkey ';5C' forward-word  #Control ->
 #bindkey ';2B' end-of-buffer-or-history
 #########################
 
-
+# zstyle ':completion::complete:*' use-cache on
+# zstyle ':completion::complete:*' cache-path ~/.zsh/cache
 
 ########### tests #########
 zstyle ':completion:*' menu select
@@ -111,6 +112,11 @@ setPROMPT(){
     RPROMPT=''
 }
 
+keyBindings(){
+    # bindkey "^p" clear-screen
+}
+
+
 tar.extract() {
     if [ -f $1 ] ; then
       case $1 in
@@ -149,5 +155,7 @@ if [[ -n "${KDE_FULL_SESSION}" ]]; then
 
     setPROMPT
 fi
+
+keyBindings()
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
