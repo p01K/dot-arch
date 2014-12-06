@@ -1,6 +1,6 @@
-(setq make-backup-files nil) ;no backup files 
-
-(cua-mode t) ;remap C-c,C-v,C-x to normal
+;;; CONFIGURATION
+(cua-mode t) ;;;remap C-c,C-v,C-x to normal
+(setq make-backup-files nil) ;;;no backup files 
 
 (require 'package)
 (add-to-list 'package-archives
@@ -131,8 +131,14 @@
 ;; ;(browse-kill-ring-default-keybindings)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                           TABBAR
+;;                           SPEEDBARBAR
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'sr-speedbar)
+(setq speedbar-use-images nil)
+(make-face 'speedbar-face)
+(set-face-font 'speedbar-face "Inconsolata-12")
+(setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
+
 
 ;; (speedbar-change-initial-expansion-list "buffers")
 ;; (global-set-key  [f3] 'speedbar-get-focus)
@@ -263,18 +269,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Use ido
-;; (ido-mode t)
-;; (ido-ubiquitous t) ; IDO in even more places
-;; (setq
-;;  ido-enable-prefix nil
-;;  ido-enable-flex-maatching t
-;;  ido-auto-merge-work-directories-length nil
-;;  ido-create-new-buffer 'always
-;;  ido-use-filename-at-point 'guess
-;;  ido-use-virtual-buffers t
-;;  ido-handle-duplicate-virtual-buffers 2
-;;  ido-max-prospects 10
-;; )
+(ido-mode t)
+(ido-ubiquitous t) ; IDO in even more places
+(setq
+ ido-enable-prefix nil
+ ido-enable-flex-maatching t
+ ido-auto-merge-work-directories-length nil
+ ido-create-new-buffer 'always
+ ido-use-filename-at-point 'guess
+ ido-use-virtual-buffers t
+ ido-handle-duplicate-virtual-buffers 2
+ ido-max-prospects 10
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                    HIGHLIGHT NASTY THINGS
@@ -300,6 +306,14 @@
    )
  )
 (global-whitespace-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                     Rainbow Delimiters
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'text-mode-hook 'rainbow-delimiters-mode)
+;; (add-hook 'LaTeX-mode-hook 'rainbow-delimiters-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                      SMARTPARENS CONFIG
@@ -373,6 +387,23 @@
 (add-hook 'prog-mode-hook 'flycheck-mode)
 (setq flycheck-check-syntax-automatically '(save))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                        COLORIZE DIFFS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Add some color in your diff-mode
+(eval-after-load 'diff-mode
+  '(progn
+     (set-face-foreground 'diff-added "green")
+     (set-face-foreground 'diff-removed "red")))
+
+;; Add some color in your magit-diff-mode
+(eval-after-load 'magit
+  '(progn
+     (set-face-foreground 'magit-diff-add "green")
+     (set-face-foreground 'magit-diff-del "red")))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                 KEYBINDINGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -438,6 +469,11 @@
 (global-set-key (kbd "C-x <down>") 'windmove-down)
 (global-set-key (kbd "C-x <right>") 'windmove-right)
 (global-set-key (kbd "C-x <left>") 'windmove-left)
+
+(global-set-key (kbd "M-i") 'previous-line)
+(global-set-key (kbd "M-j") 'backward-char)
+(global-set-key (kbd "M-k") 'next-line)
+(global-set-key (kbd "M-l") 'forward-char)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
