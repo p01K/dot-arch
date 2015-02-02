@@ -2,7 +2,7 @@ WF:="-Wall -pedantic -Wpointer-arith "
 WEXTRA:="-Werror"
 SECF:="-fstack-protector -Wl,-z,relro -Wl,-z,now -Wformat-security"
 OPTF:="-O3 -flto -funroll-loops -ftree-vectorize -msse3 -mfpmath=sse"
-EXTR_OPTF:="-fast-math -falign-functions=64 -fbranch-target-load-optimize -fprefetch-loop-arrays -fmodulo-sched"
+EXTR_OPTF:="-fast-math -falign-functions=64 -fbranch-target-load-optimize -fprefetch-loop-arrays -fmodulo-sched -fschedule-insns"
 
 
 #maybe  

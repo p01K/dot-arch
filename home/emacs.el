@@ -34,7 +34,7 @@
 ;    diff-hl               ; Highlights diffs to HEAD
 ;    password-store        ; Interact with the password-store
     monokai-theme         ; the theme
-    color-theme-solarized
+    solarized-theme
 ;   color-theme-molokai
  ;   color-theme-github
 ;    tango-theme
@@ -50,7 +50,7 @@
 ;    rcirc-notify          ; libnotify notifications from rcirc
 ;    cmake-mode
     magit                 ; Git
-;   ido-ubiquitous
+    ido-ubiquitous
 ;    dired-subtree
     dired-toggle
 ;    dired-k
@@ -60,6 +60,7 @@
     nav
     sbt-mode  ; sbt mode
     scala-mode2  ; scala mode
+    ensime
     ruby-mode   ; ruby
 ;    ruby-tools-mode  ; ruby
     xclip                 ; copy paste with X
@@ -247,7 +248,30 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                                         THEME IT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(load-theme 'monokai t) ; set theme
+(load-theme 'monokai  t) ; set theme
+;; (require 'solarized-theme)
+;; (load-theme 'solarized-dark  t) ; set theme
+;; make the fringe stand out from the background
+;; (setq solarized-distinct-fringe-background t)
+
+;; make the modeline high contrast
+;; (setq solarized-high-contrast-mode-line t)
+
+;; Use less bolding
+;; (setq solarized-use-less-bold t)
+
+;; Use more italics
+;; (setq solarized-use-more-italic t)
+
+;; (setq solarized-termcolors 256)
+;; (setq solarized-visibility high)
+;; Use less colors for indicators such as git:gutter, flycheck and similar.
+;; (setq solarized-emphasize-indicators nil)
+
+;; Don't change size of org-mode headlines (but keep other size-changes)
+;; (setq solarized-scale-org-headlines nil)
+
+;; (setq x-underline-at-descent-line t)
 
 ;; make background transparent
 ;; (let ((class '((class color) (min-colors 89))))
@@ -506,6 +530,105 @@
 (when (require 'mwheel nil 'noerror)
   (mouse-wheel-mode 1))
 (blink-cursor-mode 0)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                            LaTeX
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; (add-hook 'LaTeX-mode-hook
+;; 	  (lambda ()
+;; 					; Find which file is the main, for use with multiple tex files
+;; 	    (defun guess-TeX-master (filename)
+;; 	      "Guess the master file for FILENAME from currently open .tex files."
+;; 	      (let ((candidate nil)
+;; 		    (filename (file-name-nondirectory filename)))
+;; 		(save-excursion
+;; 		  (dolist (buffer (buffer-list))
+;; 		    (with-current-buffer buffer
+;; 		      (let ((name (buffer-name))
+;; 			    (file buffer-file-name))
+;; 			(if (and file (string-match "\\.tex$" file))
+;; 			    (progn
+;; 			      (goto-char (point-min))
+;; 			      (if (re-search-forward (concat "\\\\input{" filename "}") nil t)
+;; 				  (setq candidate file))
+;; 			      (if (re-search-forward (concat "\\\\input{" (file-name-sans-extension filename) "}") nil t)
+;; 				  (setq candidate file))
+;; 			      (if (re-search-forward (concat "\\\\include{" (file-name-sans-extension filename) "}") nil t)
+;; 				  (setq candidate file))))))))
+;; 		(if candidate
+;; 		    (message "TeX master document: %s" (file-name-nondirectory candidate)))
+;; 		candidate))
+;; 					; Add LaTeXmk support
+;; 	    (require 'auctex-latexmk)
+;; 	    (auctex-latexmk-setup)
+;; 					; Add autocompletion
+;; 	    (require 'auto-complete-auctex)
+;; 					; Add math auto completion
+;; 					;(require 'ac-math)
+;; 	    ;; (add-to-list 'ac-modes 'latex-mode)   ; make auto-complete aware of `latex-mode`
+;; 	    ;; (setq ac-sources
+;; 	    ;;       (append '(ac-source-math-unicode ac-source-math-latex ac-source-latex-commands)
+;; 	    ;;               ac-sources))
+
+;; 	    (setq TeX-master (guess-TeX-master (buffer-file-name)))
+;; 	    (setq LaTeX-verbatim-environments-local '("Verbatim" "lstlisting"))
+;; 	    (turn-on-reftex)
+;; 	    (turn-on-auto-fill)
+;; 	    (TeX-fold-mode 1)           ; Hide macros
+;; 					; Add LaTeXmk support
+;; 	    ;; (add-to-list 'TeX-command-list
+;; 	    ;;              '("LaTeXmk" "latexmk -pdf %s" TeX-run-TeX nil t
+;; 	    ;;                :help "Run Latexmk on file") t)
+;; 	    (defcustom zathura-viewer "zathura --fork -s -x \"emacsclient --eval '(progn (switch-to-buffer  (file-name-nondirectory \"'\"'\"%{input}\"'\"'\")) (goto-line %{line}))'\""
+;; 	                    "PDF Viewer for TeX documents. You may want to fork the viewer
+;;             so that it detects when the same document is launched twice, and
+;;             persists when Emacs gets closed.
+
+;;             Simple command:
+
+;;               zathura --fork
+
+;;             We can use
+
+;;               emacsclient --eval '(progn (switch-to-buffer  (file-name-nondirectory \"%{input}\")) (goto-line %{line}))'
+
+;;             to reverse-search a pdf using SyncTeX. Note that the quotes and double-quotes matter and must be escaped appropriately."
+;; 			    :safe 'stringp)
+;; 	    (add-to-list 'TeX-view-program-list
+;; 			 '("Zathura" zathura-viewer))
+;; 	    (add-to-list 'TeX-view-program-list
+;; 			 '("Evince" "evince --page-index=%(outpage) %o"))
+;; 	    ;;(setq TeX-command-default "LaTeXmk"
+;; 	    (setq TeX-auto-save t     ; Auto-save
+;; 		  TeX-save-query nil  ; When saving document don't ask
+;; 		  TeX-parse-self t    ; Support included files
+;; 		  TeX-PDF-mode t      ; Compile to PDF
+;; 					; Indent on line feed
+;; 		  TeX-newline-function 'reindent-then-newline-and-indent
+;; 					; Reftex integration to AUCTeX
+;; 		  reftex-plug-into-AUCTeX t
+;; 					; Ask for the type (Section, Subsection etc.)  Use
+;; 					; Evince
+;; 		  TeX-view-program-selection '((output-pdf "Evince"))
+;; 		  TeX-source-correlate-method 'synctex
+;; 					; must be t for inverse search
+;; 		  TeX-source-correlate-start-server t
+;; 		  LaTeX-section-hook '(LaTeX-section-heading
+;; 					; Ask for the title
+;; 				       LaTeX-section-title
+;; 					; ask for the title in TOC
+;; 				       LaTeX-section-toc
+;; 					; Insert the section
+;; 				       LaTeX-section-section
+;; 					; Ask for the label to use
+;; 				       LaTeX-section-label))
+;; 	    (TeX-source-correlate-mode)
+;; 	    (unless (server-running-p)
+;; 	      (server-start))
+;; 	                ))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; handle tmux's xterm-keys

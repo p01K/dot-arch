@@ -35,7 +35,9 @@ export ETH='enp0s25'
 export WLAN='wlp3s0'
 export XAUTHORITY=/home/$USER/.Xauthority
 export EDITOR='emacs'
-export MAIL="$HOME/docs/mail"
+export BROWSER='chromium'
+export MAIL="$HOME/.mail"
+export MAILDIR="$HOME/.mail"
 #################### /exports ##########################
 
 
@@ -68,7 +70,8 @@ alias pac.scc='sudo pacman -Scc' #clean pacman caches
 
 ########### networking ################################
 alias dmesg='dmesg -L' #add colours to the dmesg output 
-alias ss.tcp_l='ss -rplt'
+alias ss.tpl='ss -plt' #open tcp listening ports
+alias ss.rtlp='ss -rtlp' #same with domain resolution
 alias pon='sudo pon'  #maybe with nodetach
 alias poff='sudo poff'
 alias iw.conn="sudo iw dev $WLAN connect"
@@ -98,6 +101,15 @@ man(){
     LESS_TERMCAP_ue=$'\E[0m' \
     LESS_TERMCAP_us=$'\E[04;38;5;146m' \
     man "$@"
+}
+
+rg(){
+    if [ -z "$RANGER_LEVEL" ]
+    then
+	ranger
+    else
+	exit
+    fi
 }
 
 setPROMPT(){
