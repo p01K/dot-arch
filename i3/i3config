@@ -32,6 +32,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+c      exec chromium
 #++lock screen
 bindsym $mod+F2     exec i3lock -c 000000
+bindsym $mod+F7     exec xrandr --output LVDS1 --auto --output DP1 --off
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -49,15 +50,17 @@ bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
 
 # p01 additional keybindings 
-bindsym Control+j  focus left
-bindsym Control+k  focus right 
+#bindsym Control+j  focus left
+#bindsym Control+k  focus right 
 bindsym $mod+j  focus left
 bindsym $mod+k  focus right 
 bindsym Control+a  workspace back_and_forth
-bindsym Control+$alt+Right workspace next
-bindsym Control+$alt+Left workspace prev
+bindsym Control+$alt+l workspace next
+bindsym Control+$alt+j workspace prev
 bindsym $alt+Tab  focus right
-bindsym $alt+Shift+Tab  focus left
+bindsym $alt+Shift+Tab  focus up
+
+#bindysm Control+q kill 
 #bindsym $mod+Up move up
 #bindsym $mod+Right move right
 
@@ -77,6 +80,8 @@ bindsym $mod+Shift+semicolon move right
 #bindsym $mod+Shift+Up move up
 #bindsym $mod+Shift+Right move right
 
+
+# bindsym $mod+d exec dmenu
 # split in horizontal orientation
 bindsym $mod+h split h
 
@@ -114,6 +119,10 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+
+bindsym Control+1 workspace 1
+bindsym Control+2 workspace 2
+bindsym Control+3 workspace 3
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1

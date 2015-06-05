@@ -18,12 +18,10 @@ compinit
 #     KEYBINDINGS
 bindkey ';5D' backward-word #Control <-
 bindkey ';5C' forward-word  #Control ->
-#bindkey ';2A' beginning-of-buffer-or-history
-#bindkey ';2B' end-of-buffer-or-history
+
 #########################
 
-# zstyle ':completion::complete:*' use-cache on
-# zstyle ':completion::complete:*' cache-path ~/.zsh/cache
+
 
 ########### tests #########
 zstyle ':completion:*' menu select
@@ -33,11 +31,10 @@ setopt HIST_IGNORE_DUPS
 ##################### exports ###########################
 export ETH='enp0s25'
 export WLAN='wlp3s0'
+export VPN='ppp0'
 export XAUTHORITY=/home/$USER/.Xauthority
 export EDITOR='emacs'
-export BROWSER='chromium'
-export MAIL="$HOME/.mail"
-export MAILDIR="$HOME/.mail"
+export MAIL="$HOME/docs/mail"
 #################### /exports ##########################
 
 
@@ -55,7 +52,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 ##################### /generic ##########################
 
-########### PACMAN SHORTCUTS ###########################
+########### PACMAN SHORTCUTS ###################### 
 alias pac.sy='sudo pacman -Sy'
 alias pac.s='sudo pacman -S'
 alias pac.ss='pacman -Ss'
@@ -66,12 +63,14 @@ alias pac.rdd='sudo pacman -Rdd' #force removal
 alias pac.si='pacman -Si'   #display extensive info
 alias pac.qdt='sudo pacman -Qdt' #orphan packages
 alias pac.scc='sudo pacman -Scc' #clean pacman caches
+alias pac.ql='pacman -Ql'
+alias pac.qo='pacman -Qo' #query the owner(package) of the file
+alias pac.tree='pactree'
 ############ /PACMAN SHORTCUTS #####################
 
 ########### networking ################################
 alias dmesg='dmesg -L' #add colours to the dmesg output 
-alias ss.tpl='ss -plt' #open tcp listening ports
-alias ss.rtlp='ss -rtlp' #same with domain resolution
+alias ss.tcp_l='ss -rplt'
 alias pon='sudo pon'  #maybe with nodetach
 alias poff='sudo poff'
 alias iw.conn="sudo iw dev $WLAN connect"
@@ -85,11 +84,17 @@ function wpa.supplicant
 
 ########## /networking #################################
 kate.noerr(){
-  kate "$@" 2> /dev/null &
+    kate "$@" 2> /dev/null &
 }
 
 ssh.shark(){
-      ssh shark -t ssh $1
+    ssh shark -t ssh $1
+}
+
+pon.forth(){
+    sudo pon forth nodetach
+    sleep 3
+    sudo ip route add 139.91.0.0/16 dev $VPN #change routing tab
 }
 
 man(){
@@ -103,15 +108,6 @@ man(){
     man "$@"
 }
 
-rg(){
-    if [ -z "$RANGER_LEVEL" ]
-    then
-	ranger
-    else
-	exit
-    fi
-}
-
 setPROMPT(){
     local username='%n'
     local hostname='%M'
@@ -120,54 +116,53 @@ setPROMPT(){
     local integral=$'\u222B'
     local reset="%{$reset_color%}"
     local newline="%{\n%}"
-    PROMPT="%{$fg_bold[white]$integral%}$reset%{$fg[cyan]~${hostname}%}~%{$fg_bold[white]${integral}%}$reset"$'\n\t\t   ' 
+    PROMPT=' '
+    [ -n "${KDE_FULL_SESSION}" ] && PROMPT="%{$fg_bold[white]$integral%}$reset%{$fg[cyan] ${time24}%}~%{$fg[white]${dir}%}~%{$fg[cyan]\$\$%}$reset"$'\n\t\t\t   \$\$' 
     RPROMPT=''
 }
 
-keyBindings(){
-    # bindkey "^p" clear-screen
-}
-
-
 tar.extract() {
-    if [ -f $1 ] ; then
-      case $1 in
-        *.tar.bz2)   tar xjf $1     ;;
-        *.tar.gz)    tar xzf $1     ;;
-        *.bz2)       bunzip2 $1     ;;
-        *.rar)       unrar e $1     ;;
-        *.gz)        gunzip $1      ;;
-        *.tar)       tar xf $1      ;;
-        *.tbz2)      tar xjf $1     ;;
-        *.tgz)       tar xzf $1     ;;
-        *.zip)       unzip $1       ;;
-        *.Z)         uncompress $1  ;;
-        *.7z)        7z x $1        ;;
+    if [ -f $1 ] ; then 
+      case $1 in 
+        *.tar.bz2)   tar xjf $1     ;; 
+        *.tar.gz)    tar xzf $1     ;; 
+        *.bz2)       bunzip2 $1     ;; 
+        *.rar)       unrar e $1     ;; 
+        *.gz)        gunzip $1      ;; 
+        *.tar)       tar xf $1      ;; 
+        *.tbz2)      tar xjf $1     ;; 
+        *.tgz)       tar xzf $1     ;; 
+        *.zip)       unzip $1       ;; 
+        *.Z)         uncompress $1  ;; 
+        *.7z)        7z x $1        ;; 
         *)     echo "'$1' cannot be extracted via extract()" ;; 
          esac
      else
-         echo "'$1' is not a valid file"
+         echo "'$1' is not a valid file" 
      fi
 }
 
 [ -n "$DISPLAY" ] && setxkbmap -option 'ctrl:nocaps' #disable caps lock
 
-PROMPT=' '
 
-if [[ -n "${KDE_FULL_SESSION}" ]]; then
-    # PATH="$PATH:`ruby -e 'print Gem.user_dir'`/bin"
-    # alias pokerstars="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/PokerStars.EU/PokerStars.exe"
-    export TERM=screen-256color
-    export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
-    if [[ -z "$TMUX" ]]; then
-	exec tmux
-    else
-	archey3
-    fi
+[ -n "${KDE_FULL_SESSION}" ] && PATH="$PATH:`ruby -e 'print Gem.user_dir'`/bin"
 
-    setPROMPT
-fi
-
-keyBindings()
+setPROMPT
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+xset b off #disable bell sound in xterm
+
+#export t_Co=256
+#[ -n "${KDE_FULL_SESSION}" ] &&  export TERM="xterm-256color"
+
+#[[ -z "$TMUX" ]] && export TERM="screen-256color"
+if [[ "x$TERM" == "xxterm" ]] ; then
+    export TERM=xterm-256color
+fi
+export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
+#if [[ -z "$TMUX" ]]; then 
+#exec tmux
+#else 
+#    [ -n "${KDE_FULL_SESSION}" ] &&  archey3
+#fi
