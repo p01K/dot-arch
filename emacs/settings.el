@@ -3,7 +3,9 @@
 (cua-mode t) ;;;remap C-c,C-v,C-x to normal
 (setq make-backup-files nil) ;;;no backup files 
 
-
+;;disable splash screen and startup message
+(setq inhibit-startup-message t) 
+(setq initial-scratch-message nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                          SETTINGS
 ;;
@@ -66,11 +68,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                           SPEEDBARBAR
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'sr-speedbar)
-(setq speedbar-use-images nil)
-(make-face 'speedbar-face)
-(set-face-font 'speedbar-face "Inconsolata-12")
-(setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
+;; (require 'sr-speedbar)
+;; (setq speedbar-use-images nil)
+;; (make-face 'speedbar-face)
+;; (set-face-font 'speedbar-face "Inconsolata-12")
+;; (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -89,8 +91,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                                         THEME IT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(load-theme 'monokai  t) ; set theme
-
+(if (display-graphic-p)
+    (progn
+      ;; if graphic
+      (load-theme 'solarized-dark  t))
+  ;; else (optional)
+  (load-theme 'monokai t)
+  )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                          IDO SETUP
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
