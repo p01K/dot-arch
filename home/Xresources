@@ -9,7 +9,9 @@ XTerm*background: rgb:08/08/08
 
 XTerm*colour0:    rgb:28/28/28
 XTrem*colour1:	  rgb:00/ff/00
-XTerm*faceName:   Dejavu Sans Mono:size=10:antialias=false
+! XTerm*faceName:   Droid Sans Mono for Powerline:size=10:antialias=false
+XTerm*faceName:   Dejavu Sans Mono for Powerline:size=10:antialias=false
+
 
 XTerm*font: 	  7x13
 

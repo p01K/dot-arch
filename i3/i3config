@@ -65,9 +65,10 @@ bindsym $alt+Shift+Tab  focus up
 #bindsym $mod+Right move right
 
 #some system keybindings
-bindsym XF86AudioRaiseVolume exec amixer set Master,0 2+
-bindsym XF86AudioLowerVolume exec amixer set Master,0 2-
-
+bindsym XF86AudioRaiseVolume exec amixer -q sset Master 2%+
+bindsym XF86AudioLowerVolume exec amixer -q sset Master 2%-
+bindsym XF86AudioMute exec amixer set Master toggle
+# bindsym XF86Sleep exec systemctl suspend
 # move focused window
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
@@ -177,7 +178,7 @@ new_window none
 # finds out, if available)
 bar {
     position bottom 
-    mode hide
+    # mode hide
     hidden_state hide   
     status_command  exec i3status
     #status_command exec conky -c ~/.conkyrc
