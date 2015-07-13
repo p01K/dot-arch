@@ -279,3 +279,11 @@
 
 (global-set-key [f1] 'nav)
 (global-set-key [f2] 'ibuffer)
+
+;;;;;;;;;;;;;;;;;characters
+
+(global-set-key (kbd "M-j") 'left-char)
+(global-set-key (kbd "M-l") 'right-char)
+(global-set-key (kbd "M-i") 'previous-line)
+(global-set-key (kbd "M-k") 'next-line)
+;;; settings.el ends here
