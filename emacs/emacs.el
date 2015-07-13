@@ -4,4 +4,5 @@
 (load "~/docs/archConf/emacs/settings.el")
 (load "~/docs/archConf/emacs/buffers.el")
 (load "~/docs/archConf/emacs/tmux.el")
+(load "~/docs/archConf/emacs/latex.el")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
