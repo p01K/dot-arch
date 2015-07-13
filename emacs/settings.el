@@ -1,6 +1,6 @@
 ;;; settings --- various conf settings
 
-(cua-mode t) ;;;remap C-c,C-v,C-x to normal
+;; (cua-mode t) ;;;remap C-c,C-v,C-x to normal
 (setq make-backup-files nil) ;;;no backup files 
 
 ;;disable splash screen and startup message
@@ -11,6 +11,10 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+(global-undo-tree-mode 1)
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-S-z") 'undo-tree-redo)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (functionp 'tool-bar-mode) (tool-bar-mode -1))

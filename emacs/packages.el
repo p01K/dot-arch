@@ -64,7 +64,7 @@
 ;    ruby-tools-mode  ; ruby
     xclip                 ; copy paste with X
  ;   dirtree               ; directory view 
- ;  undo-tree
+    undo-tree
 )            ; Visualize undo
   "A list of packages to ensure are installed at launch.")
 
