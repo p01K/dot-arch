@@ -59,12 +59,14 @@
     nav
     sbt-mode  ; sbt mode
     scala-mode2  ; scala mode
+    ;; scala-outline-popup
     ensime
     ruby-mode   ; ruby
 ;    ruby-tools-mode  ; ruby
     xclip                 ; copy paste with X
  ;   dirtree               ; directory view 
     undo-tree
+    ;; ensime
 )            ; Visualize undo
   "A list of packages to ensure are installed at launch.")
 
