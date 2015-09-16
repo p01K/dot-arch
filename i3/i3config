@@ -181,5 +181,7 @@ bar {
     # mode hide
     hidden_state hide   
     status_command  exec i3status
-    #status_command exec conky -c ~/.conkyrc
+    #status_command python /usr/lib/python3.4/site-packages/powerline/bindings/i3/powerline-i3.py
+    font pango:PowerlineFont 10
+   #status_command exec conky -c ~/.conkyrc
 }

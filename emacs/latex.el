@@ -66,3 +66,5 @@
 (unless (server-running-p) (server-start))
 
 ;;; latex-conf.el ends here
+(setq TeX-view-program-list '(("Mupdf" "mupdf  %o")))
+(setq TeX-view-program-selection '((output-pdf "Mupdf")))
