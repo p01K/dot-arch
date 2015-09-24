@@ -54,7 +54,7 @@ bindsym $mod+semicolon focus right
 #bindsym Control+k  focus right 
 bindsym $mod+j  focus left
 bindsym $mod+k  focus right 
-bindsym Control+a  workspace back_and_forth
+bindsym $alt+a  workspace back_and_forth
 bindsym Control+$alt+l workspace next
 bindsym Control+$alt+j workspace prev
 bindsym $alt+Tab  focus right
