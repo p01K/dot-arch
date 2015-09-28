@@ -155,7 +155,7 @@ setPROMPT
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-xset b off #disable bell sound in xterm
+[ -n "$DISPLAY" ] && xset b off #disable bell sound in xterm
 
 #export t_Co=256
 #[ -n "${KDE_FULL_SESSION}" ] &&  export TERM="xterm-256color"

@@ -58,6 +58,7 @@
     professional-theme
     nav
     sbt-mode  ; sbt mode
+    julia-mode
     scala-mode2  ; scala mode
     ;; scala-outline-popup
     ensime
