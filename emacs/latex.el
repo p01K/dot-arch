@@ -1,3 +1,4 @@
+(require 'pdf-tools)
 (pdf-tools-install)
 
 (eval-after-load "preview"
@@ -60,9 +61,18 @@
 (add-hook 'TeX-mode 'turn-on-reftex)
 (add-hook 'tex-mode 'turn-on-reftex)
 
+(add-hook 'pdf-view-mode-hook 'auto-revert-mode)
 (TeX-source-correlate-mode)
 
 (require 'server)
 (unless (server-running-p) (server-start))
 
+;; (setq TeX-view-program-list '(("PDF Tools" "mupdf  %o")))
+;; (setq TeX-view-program-list '(quote (("Preview" "\"open -a Preview.app %o\""))))
+;; (setq TeX-view-program-selection '((output-pdf "Preview")))
 ;;; latex-conf.el ends here
+;; (setq TeX-view-program-list '(("Mupdf" "mupdf  %o")))
+;; (setq TeX-view-program-selection '((output-pdf "Mupdf")))
+;; (setq TeX-command-extra-options "-synctex=1")
+;; (setq         TeX-source-correlate-method 'synctexd
+	      ;; TeX-source-correlate-start-server 

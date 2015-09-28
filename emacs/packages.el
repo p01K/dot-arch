@@ -41,7 +41,7 @@
 ;    ecb                   ; Code browser
     auto-complete         ; Auto completion
     auto-complete-auctex  ; Auto completion for auctex
-;    smex
+    smex
 ;    rcirc-color           ; color usernames in rcirc
 ;    rcirc-notify          ; libnotify notifications from rcirc
 ;    cmake-mode
@@ -67,6 +67,7 @@
     xclip                 ; copy paste with X
  ;   dirtree               ; directory view 
     undo-tree
+    julia-mode
     ;; ensime
 )            ; Visualize undo
   "A list of packages to ensure are installed at launch.")
