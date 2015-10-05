@@ -217,10 +217,10 @@
      (set-face-foreground 'diff-removed "red")))
 
 ;; Add some color in your magit-diff-mode
-(eval-after-load 'magit
-  '(progn
-     (set-face-foreground 'magit-diff-add "green")
-     (set-face-foreground 'magit-diff-del "red")))
+;; (eval-after-load 'magit
+;;   '(progn
+;;      (set-face-foreground 'magit-diff-add "green")
+;;      (set-face-foreground 'magit-diff-del "red")))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
