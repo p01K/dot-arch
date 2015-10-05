@@ -41,7 +41,7 @@ export MAIL="$HOME/docs/mail"
 
 
 ###################### generic ##########################
-alias ls='ls --color=auto'
+alias -g ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 alias ls.rec='ls -R -l'
@@ -161,11 +161,33 @@ xset b off #disable bell sound in xterm
 #export t_Co=256
 #[ -n "${KDE_FULL_SESSION}" ] &&  export TERM="xterm-256color"
 
-#[[ -z "$TMUX" ]] && export TERM="screen-256color"
 if [[ "x$TERM" == "xxterm" ]] ; then
     export TERM=xterm-256color
 fi
 export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
+
+# [[ -z "$TMUX" ]] && export TERM="screen-256color"
+[[ -n "$TMUX" ]] && export export ZSH=$HOME/.oh-my-zsh
+[[ -n "$TMUX" ]] && ZSH_THEME="bira"
+[[ -n "$TMUX" ]] && plugins=(git)
+[[ -n "$TMUX" ]] && export PATH=$HOME/bin:/usr/local/bin:$PATH
+[[ -n "$TMUX" ]] && source $ZSH/oh-my-zsh.sh
+# globalias() {
+#    if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
+#      zle _expand_alias
+#      zle expand-word
+#    fi
+#    zle self-insert
+# }
+
+# zle -N globalias
+
+
+
+# bindkey " " globalias
+# bindkey "^ " magic-space           # control-space to bypass completion
+# bindkey -M isearch " " magic-space # normal space during searches
+
 #if [[ -z "$TMUX" ]]; then 
 #exec tmux
 #else 
