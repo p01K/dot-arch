@@ -4,6 +4,7 @@ HISTSIZE=4000
 SAVEHIST=4000
 setopt appendhistory autocd extendedglob notify
 setopt completealiases
+
 #bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -28,6 +29,9 @@ bindkey ';5C' forward-word  #Control ->
 ########### tests #########
 zstyle ':completion:*' menu select
 setopt HIST_IGNORE_DUPS
+setopt APPEND_HISTORY # adds history
+setopt INC_APPEND_HISTORY SHARE_HISTORY
+setopt complete_aliases
 ###################
 
 ##################### exports ###########################
