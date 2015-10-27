@@ -4,6 +4,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory autocd extendedglob notify
 setopt completealiases
+
 #bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -28,6 +29,9 @@ bindkey ';5C' forward-word  #Control ->
 ########### tests #########
 zstyle ':completion:*' menu select
 setopt HIST_IGNORE_DUPS
+setopt APPEND_HISTORY # adds history
+setopt INC_APPEND_HISTORY SHARE_HISTORY
+setopt complete_aliases
 ###################
 
 ##################### exports ###########################
@@ -167,11 +171,11 @@ fi
 export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
 
 # [[ -z "$TMUX" ]] && export TERM="screen-256color"
-[[ -n "$TMUX" ]] && export export ZSH=$HOME/.oh-my-zsh
-[[ -n "$TMUX" ]] && ZSH_THEME="bira"
+[[ -n "$TMUX" ]] && [[ -d ~/.oh-my-zsh ]] && export export ZSH=$HOME/.oh-my-zsh
+[[ -n "$TMUX" ]] && ZSH_THEME="robbyrussell"
 [[ -n "$TMUX" ]] && plugins=(git)
 [[ -n "$TMUX" ]] && export PATH=$HOME/bin:/usr/local/bin:$PATH
-[[ -n "$TMUX" ]] && source $ZSH/oh-my-zsh.sh
+[[ -n "$TMUX" ]] && [[ -d ~/.oh-my-zsh ]] && source $ZSH/oh-my-zsh.sh
 # globalias() {
 #    if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
 #      zle _expand_alias

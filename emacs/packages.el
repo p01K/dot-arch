@@ -68,6 +68,7 @@
  ;   dirtree               ; directory view 
     undo-tree
     julia-mode
+    scala-outline-popup
     ;; ensime
 )            ; Visualize undo
   "A list of packages to ensure are installed at launch.")
