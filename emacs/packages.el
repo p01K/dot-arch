@@ -44,7 +44,7 @@
     smex
 ;    rcirc-color           ; color usernames in rcirc
 ;    rcirc-notify          ; libnotify notifications from rcirc
-;    cmake-mode
+    ess
     magit                 ; Git
     ido-ubiquitous
     pdf-tools

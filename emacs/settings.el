@@ -16,6 +16,8 @@
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-z") 'undo-tree-redo)
 
+(global-set-key (kbd "C-x j") 'join-line)
+
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (functionp 'tool-bar-mode) (tool-bar-mode -1))
 (menu-bar-mode -1)
@@ -287,3 +289,8 @@
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-k") 'next-line)
 ;;; settings.el ends here
+
+(require 'ess-site)
+(setq inferior-julia-program-name "/usr/bin/julia")
+(setq ess-use-auto-complete t)
+(setq ess-tab-complete-in-script t)
