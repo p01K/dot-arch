@@ -53,8 +53,11 @@ alias grep='grep --colour -n'
 alias open='xdg-open'
 alias i3lock='i3lock --color 000000'
 alias rg='ranger'
-alias xrandr.dp='xrandr --output DP1 --auto --output LVDS1 --off'
+alias xrandr.off='xrandr --output DP1 --off --output DP2 --off --output VGA1 --off --output HDMI1 --off'
 alias xrandr.lvds0='xrandr --output LVDS1 --off'
+alias xrandr.dp2='xrandr --output DP2 --auto --output LVDS1 --off'
+alias xrandr.vga1='xrandr --output VGA1 --auto --output LVDS1 --off'
+
 
 alias ..='cd ..'
 alias ...='cd ../..'
