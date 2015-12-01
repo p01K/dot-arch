@@ -190,7 +190,8 @@ export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
 # zle -N globalias
 
 
-
+export GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc
+# alias thunderbird='GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc thunderbird'
 # bindkey " " globalias
 # bindkey "^ " magic-space           # control-space to bypass completion
 # bindkey -M isearch " " magic-space # normal space during searches

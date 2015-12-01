@@ -1,4 +1,10 @@
-;;;;;;;;;;;;;; scala settings ---  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;; scala settings ---  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (require 'yasnippet)
+
+;; (define-key yas-minor-mode-map (kbd "<C-tab>")  'yas-ido-expand)
+;; (add-hook 'scala-mode-hook
+;;           '(lambda ()
+;;              (yas/minor-mode-on)));
 
 
 (add-hook 'scala-mode-hook

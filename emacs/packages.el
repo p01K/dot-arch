@@ -69,6 +69,8 @@
     undo-tree
     julia-mode
     scala-outline-popup
+    yasnippet
+    fuzzy
     ;; ensime
 )            ; Visualize undo
   "A list of packages to ensure are installed at launch.")
