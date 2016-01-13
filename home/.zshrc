@@ -188,8 +188,11 @@ export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
 # }
 
 # zle -N globalias
-
-
+#go things
+if [[ -d ~/.go ]]; then
+    export GOPATH=~/.go
+    export PATH=$PATH:~/.go/bin
+fi
 export GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc
 # alias thunderbird='GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc thunderbird'
 # bindkey " " globalias
