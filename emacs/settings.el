@@ -113,7 +113,7 @@
 (ido-ubiquitous t) ; IDO in even more places
 (setq
  ido-enable-prefix nil
- ido-enable-flex-maatching t
+ ido-enable-flex-matching t
  ido-auto-merge-work-directories-length nil
  ido-create-new-buffer 'always
  ido-use-filename-at-point 'guess
@@ -288,6 +288,9 @@
 (global-set-key (kbd "M-l") 'right-char)
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-k") 'next-line)
+(global-set-key (kbd "C-l") 'forward-word)
+(global-set-key (kbd "C-j") 'backward-word)
+
 ;;; settings.el ends here
 
 (require 'ess-site)
