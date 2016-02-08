@@ -1,6 +1,8 @@
 (require 'pdf-tools)
 (pdf-tools-install)
 
+(require 'auto-complete-auctex)
+
 (eval-after-load "preview"
   (lambda ()
     '(add-to-list 'preview-default-preamble "\\PreviewEnvironment{tikzpicture}" t)
