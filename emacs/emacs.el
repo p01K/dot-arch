@@ -6,5 +6,6 @@
 (load "~/docs/archConf/emacs/tmux.el")
 (load "~/docs/archConf/emacs/latex.el")
 (load "~/docs/archConf/emacs/scala.el")
+(load "~/docs/archConf/emacs/prog.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
