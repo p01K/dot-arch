@@ -195,6 +195,14 @@ if [[ -d ~/.go ]]; then
     export PATH=$PATH:~/.go/bin
 fi
 export GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc
+
+POWERLINE_CONF="~/.local/lib/python3.5/site-packages/powerline/bindings/tmux/powerline.conf"
+
+[[ -n "$TMUX" ]] && [[ -f $POWERLINE_CONF ]] && tmux source $POWERLINE_CONF
+
+if [[ -d ~/.local/bin ]]; then
+    export PATH=$PATH:~/.local/bin
+fi
 # alias thunderbird='GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc thunderbird'
 # bindkey " " globalias
 # bindkey "^ " magic-space           # control-space to bypass completion
