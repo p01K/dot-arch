@@ -71,6 +71,7 @@
     scala-outline-popup
     yasnippet
     fuzzy
+    which-key
     ;; ensime
 )            ; Visualize undo
   "A list of packages to ensure are installed at launch.")

@@ -136,7 +136,7 @@
                     trailing
                     tab-mark
                     )
- whitespace-line-column 110
+ whitespace-line-column 80
  whitespace-display-mappings
  '(
    (space-mark ?\ [?\u00B7] [?.])         ; space - centered dot
@@ -297,3 +297,6 @@
 (setq inferior-julia-program-name "/usr/bin/julia")
 (setq ess-use-auto-complete t)
 (setq ess-tab-complete-in-script t)
+
+(require 'which-key)
+(which-key-mode)
