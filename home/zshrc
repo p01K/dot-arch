@@ -1,15 +1,19 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=4000
-SAVEHIST=4000
+HISTSIZE=10000
+SAVEHIST=10000
 setopt appendhistory autocd extendedglob notify
+unsetopt complete_aliases
+unsetopt completealiases
+
 #bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/p01/.zshrc'
-
+plugins+=(zsh-completions)
 autoload -U colors && colors
 autoload -Uz compinit
+
 compinit
 # End of lines added by compinstall
 #
@@ -26,33 +30,39 @@ bindkey ';5C' forward-word  #Control ->
 ########### tests #########
 zstyle ':completion:*' menu select
 setopt HIST_IGNORE_DUPS
+setopt APPEND_HISTORY # adds history
+setopt INC_APPEND_HISTORY SHARE_HISTORY
 ###################
 
 ##################### exports ###########################
-export ETH='enp0s25'
-export WLAN='wlp3s0'
 export VPN='ppp0'
 export XAUTHORITY=/home/$USER/.Xauthority
-export EDITOR='emacs'
+export EDITOR='vim'
 export MAIL="$HOME/docs/mail"
 #################### /exports ##########################
 
 
 ###################### generic ##########################
-alias ls='ls --color=auto'
+alias -g ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 alias ls.rec='ls -R -l'
 alias grep='grep --colour -n'
 alias open='xdg-open'
 alias i3lock='i3lock --color 000000'
+alias xrandr.off='xrandr --output DP1 --off --output DP2 --off --output VGA1 --off --output HDMI1 --off'
+alias xrandr.lvds0='xrandr --output LVDS1 --off'
+alias xrandr.dp2='xrandr --output DP2 --auto --output LVDS1 --off'
+alias xrandr.dp1='xrandr --output DP1 --auto --output LVDS1 --off'
+alias xrandr.vga1='xrandr --output VGA1 --auto --output LVDS1 --off'
+
 
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 ##################### /generic ##########################
 
-########### PACMAN SHORTCUTS ###################### 
+########### PACMAN SHORTCUTS ######################
 alias pac.sy='sudo pacman -Sy'
 alias pac.s='sudo pacman -S'
 alias pac.ss='pacman -Ss'
@@ -83,13 +93,6 @@ function wpa.supplicant
 }
 
 ########## /networking #################################
-kate.noerr(){
-    kate "$@" 2> /dev/null &
-}
-
-ssh.shark(){
-    ssh shark -t ssh $1
-}
 
 pon.forth(){
     sudo pon forth nodetach
@@ -145,22 +148,55 @@ tar.extract() {
 [ -n "$DISPLAY" ] && setxkbmap -option 'ctrl:nocaps' #disable caps lock
 
 
-[ -n "${KDE_FULL_SESSION}" ] && PATH="$PATH:`ruby -e 'print Gem.user_dir'`/bin"
-
 setPROMPT
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-xset b off #disable bell sound in xterm
+[ -n "$DISPLAY" ] && xset b off #disable bell sound in xterm
 
 #export t_Co=256
 #[ -n "${KDE_FULL_SESSION}" ] &&  export TERM="xterm-256color"
 
-#[[ -z "$TMUX" ]] && export TERM="screen-256color"
 if [[ "x$TERM" == "xxterm" ]] ; then
     export TERM=xterm-256color
 fi
 export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
+
+# [[ -z "$TMUX" ]] && export TERM="screen-256color"
+[[ -n "$TMUX" ]] && [[ -d ~/.oh-my-zsh ]] && export export ZSH=$HOME/.oh-my-zsh
+[[ -n "$TMUX" ]] && ZSH_THEME="robbyrussell"
+[[ -n "$TMUX" ]] && plugins=(git)
+[[ -n "$TMUX" ]] && export PATH=$HOME/bin:/usr/local/bin:$PATH
+[[ -n "$TMUX" ]] && [[ -d ~/.oh-my-zsh ]] && source $ZSH/oh-my-zsh.sh
+# globalias() {
+#    if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
+#      zle _expand_alias
+#      zle expand-word
+#    fi
+#    zle self-insert
+# }
+
+# zle -N globalias
+#go things
+if [[ -d ~/.go ]]; then
+    export GOPATH=~/.go
+    export PATH=$PATH:~/.go/bin
+fi
+export GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc
+
+POWERLINE_CONF="~/.local/lib/python3.5/site-packages/powerline/bindings/tmux/powerline.conf"
+
+[[ -n "$TMUX" ]] && [[ -f $POWERLINE_CONF ]] && tmux source $POWERLINE_CONF
+
+if [[ -d ~/.local/bin ]]; then
+    export PATH=$PATH:~/.local/bin
+fi
+
+#alias thunderbird='GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc thunderbird'
+# bindkey " " globalias
+# bindkey "^ " magic-space           # control-space to bypass completion
+# bindkey -M isearch " " magic-space # normal space during searches
+
 #if [[ -z "$TMUX" ]]; then 
 #exec tmux
 #else 
