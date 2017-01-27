@@ -1,0 +1,4 @@
+if [[ :$PATH: != *:/home/p01/.local/bin:* ]] ; then
+        export PATH=$PATH:~/.local/bin
+fi
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
