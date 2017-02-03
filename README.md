@@ -1,6 +1,6 @@
-#archConf
-========
+#Dot files for Arch Linux OS 
+=================================================================================
 
-Configuration files(zshrc,emacs.el,bashrc,i3config)
+*Configuration files(zshrc,emacs.el,bashrc,i3config)
 
-Suitable for:*Arch Linux*,"*i3 tiling manager*,*zsh*,*emacs*
+*Suitable for:*Arch Linux*,*i3*,*zsh*,*emacs*
