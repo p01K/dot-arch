@@ -1,0 +1,11 @@
+{
+   '.editor:not(.mini)': {
+     'alt-j': 'core:move-left',
+     'alt-l': 'core:move-right',
+     'alt-k': 'core:move-down',
+     'alt-i': 'core:move-up'
+     'ctrl-e': 'editor:move-to-end-of-line'       # remap core binding
+     'ctrl-a': 'editor:move-to-beginning-of-line'
+     'ctrl-A': 'core:select-all'		
+   }
+}
