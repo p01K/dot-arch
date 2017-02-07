@@ -1,11 +1,11 @@
 ;;; CONFIGURATION --- included from ~/.emacs.el
 
-(load "~/docs/archConf/emacs/packages.el")
-(load "~/docs/archConf/emacs/settings.el")
-(load "~/docs/archConf/emacs/buffers.el")
-(load "~/docs/archConf/emacs/tmux.el")
-(load "~/docs/archConf/emacs/latex.el")
-(load "~/docs/archConf/emacs/scala.el")
-(load "~/docs/archConf/emacs/prog.el")
+(load "~/repos/github/dot-arch/emacs/packages.el")
+(load "~/repos/github/dot-arch/emacs/settings.el")
+(load "~/repos/github/dot-arch/emacs/buffers.el")
+(load "~/repos/github/dot-arch/emacs/tmux.el")
+;;(load "~/repos/github/dot-arch/emacs/latex.el")
+;;(load "~/repos/github/dot-arch/emacs/scala.el")
+(load "~/repos/github/dot-arch/emacs/prog.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
