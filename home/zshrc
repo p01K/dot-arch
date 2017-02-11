@@ -69,6 +69,14 @@ alias ....='cd ../../..'
 ##################### /generic ##########################
 
 ########### PACMAN SHORTCUTS ######################
+##Taken from https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks
+function pac_remove_orphan(){
+ sudo pacman -Rns $(pacman -Qtdq)
+}
+
+function pac_dependencies(){
+ pacman -Si $1 | awk -F'[:<=>]' '/^Depends/ {print $2}' | xargs -n1 | sort -u
+}
 alias pac.sy='sudo pacman -Sy'
 alias pac.s='sudo pacman -S'
 alias pac.ss='pacman -Ss'
@@ -118,16 +126,7 @@ man(){
 }
 
 setPROMPT(){
-    local username='%n'
-    local hostname='%M'
-    local dir='%d'
-    local time24='%*'
-    local integral=$'\u222B'
-    local reset="%{$reset_color%}"
-    local newline="%{\n%}"
     PROMPT=' '
-    [ -n "${KDE_FULL_SESSION}" ] && PROMPT="%{$fg_bold[white]$integral%}$reset%{$fg[cyan] ${time24}%}~%{$fg[white]${dir}%}~%{$fg[cyan]\$\$%}$reset"$'\n\t\t\t   \$\$'
-    RPROMPT=''
 }
 
 tar.extract() {
@@ -160,21 +159,11 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 [ -n "$DISPLAY" ] && xset b off #disable bell sound in xterm
 
-#export t_Co=256
-#[ -n "${KDE_FULL_SESSION}" ] &&  export TERM="xterm-256color"
-
 #if [[ "x$TERM" == "xxterm" ]] ; then
 #    export TERM=xterm-256color
 #fi
-export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
+#[[ -d "/usr/lib/jvm/java-7-openjdk"]] && export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
 
-# [[ -z "$TMUX" ]] && export TERM="screen-256color"
-#[[ -n "$TMUX" ]] && [[ -d ~/.oh-my-zsh ]] && export export ZSH=$HOME/.oh-my-zsh
-#[[ -n "$TMUX" ]] && ZSH_THEME="robbyrussell"
-#[[ -n "$TMUX" ]] && plugins=(git)
-#[[ -n "$TMUX" ]] && [[ -d ~/.oh-my-zsh ]] && source $ZSH/oh-my-zsh.sh
-
-# zle -N globalias
 #go things
 if [[ -d ~/.go ]]; then
     export GOPATH=~/.go
@@ -182,18 +171,5 @@ if [[ -d ~/.go ]]; then
 fi
 export GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc
 
-POWERLINE_CONF="~/.local/lib/python3.5/site-packages/powerline/bindings/tmux/powerline.conf"
-
-[[ -n "$TMUX" ]] && [[ -f $POWERLINE_CONF ]] && tmux source $POWERLINE_CONF
-
 [[ -d ~/.local/bin ]] && [[ :$PATH: != *:/home/p01/.local/bin:* ]] && export PATH=$PATH:~/.local/bin
 #alias thunderbird='GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc thunderbird'
-# bindkey " " globalias
-# bindkey "^ " magic-space           # control-space to bypass completion
-# bindkey -M isearch " " magic-space # normal space during searches
-
-#if [[ -z "$TMUX" ]]; then
-#exec tmux
-#else
-#    [ -n "${KDE_FULL_SESSION}" ] &&  archey3
-#fi
