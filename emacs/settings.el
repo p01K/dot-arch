@@ -130,7 +130,7 @@
 (setq-default
  whitespace-style '(face
 ;                    spaces
-                    tabs
+;                    tabs
                     empty
                     lines-tail
                     trailing
