@@ -47,7 +47,7 @@
     ess
     magit                 ; Git
     ido-ubiquitous
-    pdf-tools
+;    pdf-tools
     powerline
     ;    dired-subtree
     dired-toggle
@@ -57,18 +57,12 @@
     sr-speedbar
     professional-theme
     nav
-    sbt-mode  ; sbt mode
-    julia-mode
-    scala-mode2  ; scala mode
+    scala-mode  ; scala mode
     ;; scala-outline-popup
-    ensime
-    ruby-mode   ; ruby
 ;    ruby-tools-mode  ; ruby
     xclip                 ; copy paste with X
  ;   dirtree               ; directory view 
     undo-tree
-    julia-mode
-    scala-outline-popup
     yasnippet
     fuzzy
     which-key
