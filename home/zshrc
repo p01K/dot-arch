@@ -159,8 +159,11 @@ tar.extract() {
 
 set_space_prompt
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
+if [[ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] ; then
+   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+   echo "Install syntax highlighting"
+fi
 [ -n "$DISPLAY" ] && xset b off #disable bell sound in xterm
 
 #if [[ "x$TERM" == "xxterm" ]] ; then
