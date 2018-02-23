@@ -125,6 +125,15 @@ man(){
     man "$@"
 }
 
+enable_alt_shift(){
+	setxkbmap -layout us,gr -option grp:alt_shift_toggle
+}
+
+magnet2torrent_xclip(){
+	m=$(xclip -out -selection clipboard)
+	magnet2torrent -m "'$m'" -o $1
+}
+
 function set_space_prompt {
     PROMPT=' '
 }
