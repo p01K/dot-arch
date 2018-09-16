@@ -14,6 +14,8 @@ plugins+=(zsh-completions)
 autoload -U colors && colors
 autoload -Uz compinit
 
+[[ -d ~/.zfunc ]] && fpath+=~/.zfunc
+
 compinit
 # End of lines added by compinstall
 #
