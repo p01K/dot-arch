@@ -1,0 +1,9 @@
+xorg-server
+xorg-xrandr
+xterm
+i3-wm
+i3status
+xorg-setxkbmap
+rofi
+networkmanager
+udevil
