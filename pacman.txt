@@ -7,3 +7,15 @@ xorg-setxkbmap
 rofi
 networkmanager
 udevil
+pacman-contrib
+openssh
+pavucontrol
+pulseaudio
+python
+ripgrep
+rofi
+tmux
+firefox
+zsh
+zsh-completions
+zsh-syntax-highlighting
