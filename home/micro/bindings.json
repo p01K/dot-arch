@@ -3,7 +3,12 @@
 "Alt-k":"CursorDown",
 "Alt-j":"CursorLeft",
 "Alt-l":"CursorRight",
+"Alt-J":"WordLeft",
+"Alt-L":"WordRight",
 "CtrlA":"StartOfLine",
 "CtrlE":"EndOfLine",
 "CtrlT":"AddTab",
+"CtrlZ":"Undo",
+"Alt-d":"DeleteWordRight",
+"Alt-A":"SelectAll"
 }
