@@ -1,9 +1,9 @@
 xorg-server
 xorg-xrandr
+xorg-setxkbmap
 xterm
 i3-wm
 i3status
-xorg-setxkbmap
 rofi
 networkmanager
 udevil
@@ -12,6 +12,8 @@ openssh
 pavucontrol
 pulseaudio
 python
+python-pip
+ranger
 ripgrep
 rofi
 tmux
