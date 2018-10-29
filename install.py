@@ -26,7 +26,7 @@ filedict = {
 "zshrc"      :("home/zshrc.zsh","{}/.zshrc"),
 "zlogin"     :("home/zlogin","{}/.zshrc"),
 "Xresources" :("home/Xresources","{}/.Xresources"),
-"micro"      :("home/micro.json","{}/.config/micro/settings.json"),
+"micro"      :("home/micro/bindings.json","{}/.config/micro/bindings.json"),
 "i3"         :("i3/i3config","{}/.i3/config"),
 "i3status"   :("i3/i3status.conf","{}/.i3status.conf")
 }
