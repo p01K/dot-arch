@@ -11,7 +11,7 @@ def install(key):
     source_path, dest_path = filedict[key]
     print(os.path.isfile(source_path))
     print(os.path.isfile(dest_path))
-    #shutil.copyfile(source_path,dest_path)
+    shutil.copyfile(source_path,dest_path)
     return (source_path, dest_path)
 
 def install_all(keylist):
@@ -23,7 +23,7 @@ USER_HOME="/home/{}".format(user)
 filedict = {
 "alacritty"  :("home/alacritty.yml","{}/.config/alacritty/alacritty.yml"),
 "tmux"       :("home/tmux.conf","{}/.tmux.conf"),
-"zshrc"      :("home/zshrc","{}/.zshrc"),
+"zshrc"      :("home/zshrc.zsh","{}/.zshrc"),
 "zlogin"     :("home/zlogin","{}/.zshrc"),
 "Xresources" :("home/Xresources","{}/.Xresources"),
 "micro"      :("home/micro.json","{}/.config/micro/settings.json"),
@@ -35,7 +35,6 @@ for k in filedict.keys():
     (src,dst)   = filedict[k]
     filedict[k] = (src,dst.format(USER_HOME))
 
-print(filedict)
 
 if __name__== "__main__":
 
