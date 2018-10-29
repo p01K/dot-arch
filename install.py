@@ -46,4 +46,4 @@ if __name__== "__main__":
 
     print(args.mod)
     print(filedict.contains_key(args.mod))
-    print(install("tmux"))
+    print(args.mod)
