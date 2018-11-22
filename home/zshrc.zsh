@@ -173,7 +173,13 @@ tar.extract() {
 
 [ -n "$DISPLAY" ] && setxkbmap -option 'ctrl:nocaps' #disable caps lock
 
-
+jar.strip() {
+	if [ -f $1 ]; then
+		zip -d $1 'META-INF/*.SF' 'META-INF/*.RSA' 'META-INF/*SF'
+	else 
+		echo "$1 not a valid file"
+	fi
+}
 set_space_prompt
 
 if [[ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] ; then
