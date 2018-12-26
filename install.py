@@ -21,7 +21,7 @@ USER_HOME="/home/{}".format(user)
 filedict = {
 "alacritty"  :("home/alacritty/alacritty.yml","{}/.config/alacritty/alacritty.yml"),
 "tmux"       :("home/tmux.conf","{}/.tmux.conf"),
-"zshrc"      :("home/zshrc","{}/.zshrc"),
+"zshrc"      :("home/zshrc.zsh","{}/.zshrc"),
 "zlogin"     :("home/zlogin","{}/.zshrc"),
 "Xresources" :("home/Xresources","{}/.Xresources"),
 "micro"      :("home/micro/bindings.json","{}/.config/micro/bindings.json"),
@@ -40,4 +40,5 @@ if __name__== "__main__":
     parser.add_argument('-m', '--mod', type=str, required=True, help=help_msg)
     args     = parser.parse_args()
 
+    print(args.mod)
     install(args.mod)
