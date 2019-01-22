@@ -103,6 +103,14 @@ alias iw.conn="sudo iw dev $WLAN connect"
 alias iw.scan="sudo iw dev $WLAN scan"
 alias ip.wup="sudo ip link set $WLAN up"
 
+############# ########################################
+alias mvn.package_skip_tests="mvn package -Dmaven.test.skip=true"
+alias mvn.install_skip_tests="mvn install -Dmaven.test.skip=true"
+alias mvn.clean_package_skip_tests="mvn clean package -Dmaven.test.skip=true"
+alias mvn.clean_install_skip_tests="mvn clean install -Dmaven.test.skip=true"
+alias mvn.assembly_skip_tests="mvn package assembly:single -Dmaven.test.skip=true"
+#####################################################
+
 function wpa.supplicant
 {
     sudo wpa_supplicant -i $WLAN -c /etc/wpa_supplicant/"$1".conf
