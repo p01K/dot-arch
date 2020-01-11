@@ -111,6 +111,11 @@ alias mvn.clean_install_skip_tests="mvn clean install -Dmaven.test.skip=true"
 alias mvn.assembly_skip_tests="mvn package assembly:single -Dmaven.test.skip=true"
 #####################################################
 
+function mvn.update_version
+{
+	mvn release:update-versions -DdevelopmentVersion="$1"
+}
+
 function wpa.supplicant
 {
     sudo wpa_supplicant -i $WLAN -c /etc/wpa_supplicant/"$1".conf
@@ -205,6 +210,8 @@ fi
 #go things
 if [[ -d ~/.go ]]; then
     export GOPATH=~/.go
+    [[ ! -d $GOPATH/bin ]] && mkdir $GOPATH/bin
+    export GOBIN=$GOPATH/bin
     export PATH=$PATH:~/.go/bin
 fi
 export GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc
