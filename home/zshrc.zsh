@@ -184,7 +184,7 @@ tar.extract() {
      fi
 }
 
-[ -n "$DISPLAY" ] && setxkbmap -option 'ctrl:nocaps' #disable caps lock
+[ -n "$DISPLAY" ] && [[ "$XDG_SESSION_TYPE" != "wayland" ]] && setxkbmap -option 'ctrl:nocaps' #disable caps lock
 
 set_space_prompt
 
