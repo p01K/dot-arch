@@ -43,15 +43,14 @@ setopt INC_APPEND_HISTORY SHARE_HISTORY
 ###################
 
 ##################### exports ###########################
-export VPN='ppp0'
 export XAUTHORITY=/home/$USER/.Xauthority
-export EDITOR='vim'
+export EDITOR='micro'
 export MAIL="$HOME/docs/mail"
 #################### /exports ##########################
 
 
 ###################### generic ##########################
-alias -g ls='ls --color=auto'
+alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 alias ls.rec='ls -R -l'
@@ -97,37 +96,6 @@ alias pac.tree='pactree'
 ########### networking ################################
 alias dmesg='dmesg -L' #add colours to the dmesg output
 alias ss.tcp_l='ss -rplt'
-alias pon='sudo pon'  #maybe with nodetach
-alias poff='sudo poff'
-alias iw.conn="sudo iw dev $WLAN connect"
-alias iw.scan="sudo iw dev $WLAN scan"
-alias ip.wup="sudo ip link set $WLAN up"
-
-############# ########################################
-alias mvn.package_skip_tests="mvn package -Dmaven.test.skip=true"
-alias mvn.install_skip_tests="mvn install -Dmaven.test.skip=true"
-alias mvn.clean_package_skip_tests="mvn clean package -Dmaven.test.skip=true"
-alias mvn.clean_install_skip_tests="mvn clean install -Dmaven.test.skip=true"
-alias mvn.assembly_skip_tests="mvn package assembly:single -Dmaven.test.skip=true"
-#####################################################
-
-function mvn.update_version
-{
-	mvn release:update-versions -DdevelopmentVersion="$1"
-}
-
-function wpa.supplicant
-{
-    sudo wpa_supplicant -i $WLAN -c /etc/wpa_supplicant/"$1".conf
-}
-
-########## /networking #################################
-
-pon.forth(){
-    sudo pon forth nodetach
-    sleep 3
-    sudo ip route add 139.91.0.0/16 dev $VPN #change routing tab
-}
 
 man(){
     env LESS_TERMCAP_mb=$'\E[01;31m' \
@@ -144,10 +112,6 @@ enable_alt_shift(){
 	setxkbmap -layout us,gr -option grp:alt_shift_toggle
 }
 
-magnet2torrent_xclip(){
-	m=$(xclip -out -selection clipboard)
-	magnet2torrent -m "'$m'" -o $1
-}
 
 function set_space_prompt {
     PROMPT=' '
@@ -157,10 +121,6 @@ function set_full_prompt {
   PROMPT="%{$fg[yellow]%}%n%{$reset_color%} %{$fg[yellow]%}%~ $\$ %{$reset_color%}"
  }
 
-function amdgpu_set_fan_speed(){
-  sudo bash -c "echo '2' > at /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input"
-  sudo bash -c "echo $1 > /sys/class/drm/card0/device/hwmon/hwmon2/pwm1"
-}
 
 tar.extract() {
     if [ -f $1 ] ; then
@@ -195,10 +155,6 @@ else
 fi
 [ -n "$DISPLAY" ] && xset b off #disable bell sound in xterm
 
-#if [[ "x$TERM" == "xxterm" ]] ; then
-#    export TERM=xterm-256color
-#fi
-#[[ -d "/usr/lib/jvm/java-7-openjdk"]] && export JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
 
 #go things
 if [[ -d ~/.go ]]; then
@@ -210,4 +166,4 @@ fi
 export GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc
 
 [[ -d ~/.local/bin ]] && [[ :$PATH: != *:/home/p01/.local/bin:* ]] && export PATH=$PATH:~/.local/bin
-#alias thunderbird='GTK2_RC_FILES=/usr/share/themes/Orion/gtk-2.0/gtkrc thunderbird'
+[[ -d ~/bin ]] && [[ :$PATH: != *:/home/p01/bin:* ]] && export PATH=$PATH:~/bin
