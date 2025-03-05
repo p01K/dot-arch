@@ -1,0 +1,2 @@
+otf-font-awesome
+waybar
