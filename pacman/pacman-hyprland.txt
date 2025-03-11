@@ -1,2 +1,3 @@
-otf-font-awesome
 waybar
+ttf-jetbrains-mono-nerd
+ttf-jetbrains
